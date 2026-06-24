@@ -1,0 +1,352 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pustakalaya | Book Details</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Literata:ital,wght@0,200..900;1,200..900&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Design System Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "secondary-fixed-dim": "#ffb3ae",
+                    "surface-container": "#f7eed2",
+                    "on-secondary-fixed-variant": "#842424",
+                    "primary": "#061b0e",
+                    "primary-fixed-dim": "#b4cdb8",
+                    "on-secondary-container": "#74181a",
+                    "secondary-fixed": "#ffdad7",
+                    "surface-container-lowest": "#ffffff",
+                    "outline-variant": "#c3c8c1",
+                    "on-primary-fixed": "#0b2013",
+                    "tertiary-fixed": "#ffe088",
+                    "background": "#fff9ed",
+                    "on-primary-fixed-variant": "#364c3c",
+                    "surface-dim": "#e2dabf",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#fcf3d8",
+                    "tertiary-container": "#cba72f",
+                    "surface-container-low": "#fcf3d8",
+                    "surface-container-high": "#f1e8cd",
+                    "tertiary": "#735c00",
+                    "surface-tint": "#4d6453",
+                    "tertiary-fixed-dim": "#e9c349",
+                    "on-secondary-fixed": "#410005",
+                    "on-surface-variant": "#434843",
+                    "surface-container-highest": "#ebe2c8",
+                    "on-tertiary-fixed": "#241a00",
+                    "on-background": "#1f1c0b",
+                    "surface-bright": "#fff9ed",
+                    "on-tertiary-container": "#4e3d00",
+                    "secondary-container": "#fe807a",
+                    "on-primary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed": "#d0e9d4",
+                    "on-surface": "#1f1c0b",
+                    "secondary": "#a33b39",
+                    "surface-variant": "#ebe2c8",
+                    "outline": "#737973",
+                    "surface": "#fff9ed",
+                    "on-primary-container": "#819986",
+                    "primary-container": "#1b3022",
+                    "inverse-primary": "#b4cdb8",
+                    "on-tertiary-fixed-variant": "#574500",
+                    "inverse-on-surface": "#faf0d5",
+                    "inverse-surface": "#35301e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "40px",
+                    "gutter": "24px",
+                    "container-max": "1200px",
+                    "unit": "8px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": ["EB Garamond"],
+                    "headline-xl": ["EB Garamond"],
+                    "headline-lg": ["EB Garamond"],
+                    "body-lg": ["Literata"],
+                    "caption": ["Literata"],
+                    "label-md": ["Literata"],
+                    "headline-lg-mobile": ["EB Garamond"],
+                    "body-md": ["Literata"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #fff9ed; /* Fallback for surface */
+            background-image: 
+                radial-gradient(circle at 2px 2px, rgba(27, 48, 34, 0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        .paper-texture {
+            position: relative;
+        }
+        .paper-texture::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url("https://www.transparenttextures.com/patterns/felt.png");
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .wax-seal {
+            background: linear-gradient(145deg, #7a0c14, #4d080d);
+            box-shadow: inset 1px 1px 2px rgba(255,255,255,0.2), 2px 2px 4px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .book-shadow {
+            box-shadow: 20px 20px 40px -10px rgba(27, 48, 34, 0.15), 
+                        5px 5px 10px rgba(0,0,0,0.1);
+        }
+
+        .dotted-divider {
+            background-image: radial-gradient(circle, #737973 1px, transparent 1px);
+            background-size: 6px 1px;
+            background-repeat: repeat-x;
+            height: 1px;
+            width: 100%;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- TopNavBar -->
+<nav class="bg-surface-container-low dark:bg-surface-container border-b border-outline-variant shadow-sm docked full-width top-0 z-50">
+<div class="flex justify-between items-center px-margin-desktop py-4 w-full max-w-container-max mx-auto">
+<div class="font-headline-md text-headline-md text-primary dark:text-primary-fixed italic tracking-tight"><img src="https://lh3.googleusercontent.com/aida/AP1WRLsNQk0wCd8bL4CXgyldQjB9feV5vGst7NEjB1H0uhHpch1Ez5fapkURxTq6BrGT8V6IPmZJD6IHRIIF8pYBaIO8daWWgmizxysZaXlp0kGyok0ODwJviXBFkBB-Qt_JL0-vfwZ6l956MLs5HrgmIynxf1j6oCVIJpPbmc27aKBMU5MqmUxoeY7sKrcpqdTeSL9rGNZQOpCGpebD2U9R9KaZecVwLYOkChuqvo_uP4N1NUjleuu2pNJ84Q" alt="Pustakalaya Logo" class="h-16 w-auto object-contain"></div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-body-md text-label-md uppercase tracking-widest text-on-surface-variant hover:text-secondary transition-all duration-400 ease-in-out" href="#">Books</a>
+<a class="font-body-md text-label-md uppercase tracking-widest text-on-surface-variant hover:text-secondary transition-all duration-400 ease-in-out" href="#">Authors</a>
+<a class="font-body-md text-label-md uppercase tracking-widest text-on-surface-variant hover:text-secondary transition-all duration-400 ease-in-out" href="#">Genres</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="font-body-md text-label-md uppercase tracking-widest text-primary font-bold hover:text-secondary transition-colors">Admin Portal</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A circular profile avatar for a magical librarian, featuring a stylized quill and an open book emblem in deep forest green and gold on a parchment-textured background. The mood is scholarly and high-end, fitting the Dark Academia aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLeLtzube8hLnm5xEl07jeJIFDwH0Az7qvzhCnz_R44TewVtKhd_gu7ZqYFDzkGs2PbAlI_OfLJ8kabL6ym6hF4w4kMNpW9UDHTxt_Q_2uvLoBTSjTmnraN2biEHsgNR8wXqr9eFqnxX6-dhJ1dfkzwQ_2v8dammBFVzUgiHrhPshtdkKS1HIXqBycEMCflhzYv2RL3h051iTJMEnx5zinyLybk7aJ7XORdqR-NCcEGCPjMihMK1ipkgpGl8XgsW9jZhXELSdgBw">
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12">
+<!-- Back Button -->
+<div class="mb-12">
+<a class="inline-flex items-center gap-2 group text-on-surface-variant hover:text-primary transition-colors duration-400" href="#">
+<span class="material-symbols-outlined transition-transform group-hover:-translate-x-1">arrow_back</span>
+<span class="font-body-md text-label-md uppercase tracking-widest">Return to Catalog</span>
+</a>
+</div>
+<!-- Book Detail Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+<!-- Left Side: Cover -->
+<div class="lg:col-span-5 flex justify-center">
+<div class="relative group w-full max-w-md">
+<!-- Book Spine/Cover Placeholder -->
+<div class="aspect-[2/3] w-full bg-primary-container book-shadow rounded-r-lg overflow-hidden relative paper-texture">
+<img class="w-full h-full object-cover opacity-90 mix-blend-multiply" data-alt="A vintage, ornate leather-bound book cover with intricate gold leaf filigree patterns. The leather is a deep, dark burgundy with weathered edges. In the center, a hand-drawn illustration of a mythical celestial map is embossed. The lighting is soft and atmospheric, highlighting the rich textures of the worn parchment and cracked leather. Enchanted library vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhwML8MA8ZwXtjjZM8uMQtyrhqV5_i1u1A5Hhuw1XKoRTKrMyEckUkUx7fS68Ia7Naixm5o5fEJRllXEkZt182j7CJzF_iQoaVfXsAJDyh-_V1X5HsSUir3VqiGjM80fgrySoY9H8EV-KOWitzs7aUBih3Bye7oK-3bbu8EgfAoY2Xk4y4J-jfsIenLIS5_TuGRUOkKEKP0MaRwPjlZBVNN8MKF8fmVE3S5dp-ylu3KUAEj8VEb83_6BJNzfOuaFPSi8sz4a8RRQ">
+<!-- Overlaying Label (Shelf Mark) -->
+<div class="absolute bottom-8 left-0 right-0 flex justify-center z-10">
+<div class="bg-surface-container-highest/90 backdrop-blur px-4 py-2 border-y border-tertiary-container shadow-sm">
+<span class="font-caption text-caption italic tracking-widest text-on-tertiary-container uppercase">Archive Ref: CL-1892-BX</span>
+</div>
+</div>
+</div>
+<!-- Atmospheric Glow Effect -->
+<div class="absolute -inset-4 bg-tertiary-fixed-dim/5 blur-3xl -z-10 group-hover:bg-tertiary-fixed-dim/10 transition-colors duration-1000"></div>
+</div>
+</div>
+<!-- Right Side: Metadata -->
+<div class="lg:col-span-7 space-y-10">
+<header class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="wax-seal w-8 h-8">
+<span class="material-symbols-outlined text-white text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+</div>
+<span class="font-body-md text-label-md uppercase tracking-[0.2em] text-secondary font-bold">Rare Collection</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-primary leading-tight">The Cartography of Whispers</h1>
+<div class="flex flex-wrap items-center gap-x-8 gap-y-4 pt-2">
+<div>
+<p class="font-caption text-caption text-on-surface-variant uppercase tracking-widest">Author</p>
+<p class="font-body-lg text-body-lg text-on-surface italic">Alistair Vane, High Archivist</p>
+</div>
+<div>
+<p class="font-caption text-caption text-on-surface-variant uppercase tracking-widest">Genre</p>
+<p class="font-body-lg text-body-lg text-on-surface italic">Esoteric Geography</p>
+</div>
+<div>
+<p class="font-caption text-caption text-on-surface-variant uppercase tracking-widest">Status</p>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div>
+<p class="font-body-lg text-body-lg text-on-surface italic">3 Volumes in Stack</p>
+</div>
+</div>
+</div>
+</header>
+<div class="dotted-divider"></div>
+<!-- History Section -->
+<section class="space-y-6">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">history_edu</span>
+<h2 class="font-headline-md text-headline-md text-primary">History of this Tome</h2>
+</div>
+<div class="space-y-4 font-body-md text-body-md text-on-surface-variant leading-relaxed max-w-2xl first-letter:text-5xl first-letter:font-headline-xl first-letter:float-left first-letter:mr-3 first-letter:text-primary">
+                        Recovered from the flooded remains of the Crescent Observatory in 1892, this volume remains the only comprehensive guide to the shifting borders of the Dreamlands. Every page is hand-vellum and infused with a low-level resonance that allows the ink to remain visible even in total darkness.
+                        <br><br>
+                        Scholars believe Alistair Vane did not write these words, but rather listened to them. The text describes landscapes that no longer exist and stars that have never been seen by the waking eye. Note the coffee stains on page 412—bequeathed by the original curator who reportedly vanished while studying the central fold-out map.
+                    </div>
+</section>
+<!-- Actions -->
+<div class="flex flex-wrap gap-4 pt-6">
+<button class="px-8 py-4 bg-[#630A10] text-white font-label-md text-label-md uppercase tracking-widest rounded shadow-[inset_0_-2px_4px_rgba(0,0,0,0.3)] hover:scale-[0.98] transition-all duration-400 active:shadow-inner flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px]">bookmark</span>
+                        Request for Reading Room
+                    </button>
+<button class="px-8 py-4 border border-tertiary-container bg-surface-container-low text-primary font-label-md text-label-md uppercase tracking-widest rounded hover:bg-surface-container transition-all duration-400 flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px]">share</span>
+                        Dispatch Catalog Link
+                    </button>
+</div>
+<!-- Catalog Card Detail -->
+<div class="mt-12 p-8 bg-surface-container-high border border-outline-variant rounded-lg paper-texture relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-24 h-24 bg-tertiary/5 rotate-45 translate-x-12 -translate-y-12"></div>
+<div class="relative z-10 grid grid-cols-2 gap-8">
+<div>
+<p class="font-caption text-caption text-on-surface-variant uppercase tracking-tighter mb-1">Catalog Number</p>
+<p class="font-body-md text-body-md font-bold text-primary">XV-7781-B</p>
+</div>
+<div>
+<p class="font-caption text-caption text-on-surface-variant uppercase tracking-tighter mb-1">Last Loaned</p>
+<p class="font-body-md text-body-md font-bold text-primary italic">Nov 14, 1924</p>
+</div>
+<div>
+<p class="font-caption text-caption text-on-surface-variant uppercase tracking-tighter mb-1">Condition</p>
+<p class="font-body-md text-body-md font-bold text-primary">Fragile (Level 4)</p>
+</div>
+<div>
+<p class="font-caption text-caption text-on-surface-variant uppercase tracking-tighter mb-1">Restoration</p>
+<p class="font-body-md text-body-md font-bold text-primary">Lanolin Treatment (1956)</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Related Objects (Asymmetric Bento) -->
+<section class="mt-24 space-y-12">
+<div class="text-center">
+<h3 class="font-headline-lg text-headline-lg text-primary">Similar Ancient Works</h3>
+<div class="w-24 h-px bg-tertiary mx-auto mt-4"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 h-auto md:h-[400px]">
+<div class="md:col-span-2 group relative overflow-hidden rounded-lg bg-surface-container-highest border border-outline-variant paper-texture p-12 flex flex-col justify-end">
+<div class="absolute inset-0 opacity-10 group-hover:scale-110 transition-transform duration-1000">
+<img class="w-full h-full object-cover" data-alt="Close up detail of antique gold gilding on the edge of aged parchment book pages. The focus is sharp on the texture of the paper fibers and the reflective quality of the gold leaf. Warm, ambient museum-style lighting with deep shadows. Elegant and prestigious." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF2agQ9N5cEzA6K97SWBhBmaH-EWPrt3HBudh4QWCYZoVexVdWoaghuj_WJPC-sWvuOyNpxHKZvJX8-BcSqCTN7MVE69KHIWBzNBZOHMiLIe3_Z0dQwPdrkbXJGjPnjZyBObTT2R1TrAnooqeyK4UOZhvoYeXau_woLIAwfc1M83BnmobHiBz7EfBBwyetMtwkuaRDkO0kW7UrTfFweNU_RGXwpWconC_zOaaEeOcR03q720jVuTiL0NMhTppwZOiqXk5WlZQI9A">
+</div>
+<div class="relative z-10 space-y-2">
+<p class="font-caption text-caption text-secondary uppercase tracking-[0.3em]">Volume II</p>
+<h4 class="font-headline-md text-headline-md text-primary">The Lexicon of Lost Tongues</h4>
+<p class="font-body-md text-body-md text-on-surface-variant italic max-w-md">A companion volume focusing on the languages spoken in the places Vane mapped.</p>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-lg bg-primary-container p-8 flex flex-col items-center justify-center text-center">
+<div class="wax-seal w-16 h-16 mb-6">
+<span class="material-symbols-outlined text-white text-[32px]">ink_pen</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-primary-fixed">The Archivist's Collection</h4>
+<p class="font-caption text-caption text-on-primary-container uppercase mt-4 tracking-widest">14 Books Total</p>
+<a class="mt-6 text-tertiary-fixed font-label-md text-label-md uppercase tracking-widest hover:underline" href="#">View All</a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest dark:bg-surface-container-low w-full mt-auto border-t border-dotted border-outline">
+<div class="flex flex-col items-center py-margin-desktop gap-unit w-full">
+<div class="font-headline-sm text-headline-sm text-primary mb-4 italic"><img src="https://lh3.googleusercontent.com/aida/AP1WRLsNQk0wCd8bL4CXgyldQjB9feV5vGst7NEjB1H0uhHpch1Ez5fapkURxTq6BrGT8V6IPmZJD6IHRIIF8pYBaIO8daWWgmizxysZaXlp0kGyok0ODwJviXBFkBB-Qt_JL0-vfwZ6l956MLs5HrgmIynxf1j6oCVIJpPbmc27aKBMU5MqmUxoeY7sKrcpqdTeSL9rGNZQOpCGpebD2U9R9KaZecVwLYOkChuqvo_uP4N1NUjleuu2pNJ84Q" alt="Pustakalaya Logo" class="h-24 w-auto object-contain mx-auto"></div>
+<div class="flex gap-8 mb-6">
+<a class="font-caption text-caption italic text-on-surface-variant hover:text-secondary transition-colors duration-400" href="#">Library Hours</a>
+<a class="font-caption text-caption italic text-on-surface-variant hover:text-secondary transition-colors duration-400" href="#">Address</a>
+<a class="font-caption text-caption italic text-on-surface-variant hover:text-secondary transition-colors duration-400" href="#">Contact the Archivist</a>
+</div>
+<p class="font-caption text-caption italic text-on-surface-variant opacity-60">© 1892 Pustakalaya Magical Library. All rights reserved.</p>
+</div>
+</footer>
+<script>
+        // Micro-interaction for hover effects on the book cover
+        const cover = document.querySelector('.group');
+        if (cover) {
+            cover.addEventListener('mousemove', (e) => {
+                const rect = cover.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                cover.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            
+            cover.addEventListener('mouseleave', () => {
+                cover.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+            });
+        }
+
+        // Vanilla scroll atmospheric reveal
+        window.addEventListener('scroll', () => {
+            const elements = document.querySelectorAll('section');
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.8) {
+                    el.classList.add('opacity-100');
+                    el.classList.remove('opacity-0');
+                    el.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+
+
+</body></html>

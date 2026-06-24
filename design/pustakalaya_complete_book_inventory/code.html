@@ -1,0 +1,468 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pustakalaya | Librarian Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Literata:ital,wght@0,200..900;1,200..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#ffffff",
+                      "secondary-fixed-dim": "#ffb3ae",
+                      "surface-container": "#f7eed2",
+                      "on-secondary-fixed-variant": "#842424",
+                      "primary": "#061b0e",
+                      "primary-fixed-dim": "#b4cdb8",
+                      "on-secondary-container": "#74181a",
+                      "secondary-fixed": "#ffdad7",
+                      "surface-container-lowest": "#ffffff",
+                      "outline-variant": "#c3c8c1",
+                      "on-primary-fixed": "#0b2013",
+                      "background": "#fff9ed",
+                      "on-primary-fixed-variant": "#364c3c",
+                      "surface-dim": "#e2dabf",
+                      "error-container": "#ffdad6",
+                      "error": "#ba1a1a",
+                      "on-secondary": "#ffffff",
+                      "surface-container-low": "#fcf3d8",
+                      "tertiary-container": "#cba72f",
+                      "surface-container-high": "#f1e8cd",
+                      "tertiary": "#735c00",
+                      "surface-tint": "#4d6453",
+                      "tertiary-fixed-dim": "#e9c349",
+                      "on-secondary-fixed": "#410005",
+                      "on-surface-variant": "#434843",
+                      "surface-container-highest": "#ebe2c8",
+                      "on-tertiary-fixed": "#241a00",
+                      "on-background": "#1f1c0b",
+                      "surface-bright": "#fff9ed",
+                      "on-tertiary-container": "#4e3d00",
+                      "secondary-container": "#fe807a",
+                      "on-primary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "on-tertiary": "#ffffff",
+                      "primary-fixed": "#d0e9d4",
+                      "on-surface": "#1f1c0b",
+                      "secondary": "#a33b39",
+                      "surface-variant": "#ebe2c8",
+                      "outline": "#737973",
+                      "surface": "#fff9ed",
+                      "on-primary-container": "#819986",
+                      "primary-container": "#1b3022",
+                      "inverse-primary": "#b4cdb8",
+                      "on-tertiary-fixed-variant": "#574500",
+                      "inverse-on-surface": "#faf0d5",
+                      "inverse-surface": "#35301e"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "40px",
+                      "gutter": "24px",
+                      "container-max": "1200px",
+                      "unit": "8px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "headline-md": ["EB Garamond"],
+                      "headline-xl": ["EB Garamond"],
+                      "headline-lg": ["EB Garamond"],
+                      "body-lg": ["Literata"],
+                      "caption": ["Literata"],
+                      "label-md": ["Literata"],
+                      "headline-lg-mobile": ["EB Garamond"],
+                      "body-md": ["Literata"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .parchment-texture {
+            background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+        }
+        .dotted-divider {
+            background-image: radial-gradient(circle, #737973 1px, transparent 1px);
+            background-size: 8px 8px;
+            background-repeat: repeat-x;
+            height: 1px;
+            border: none;
+        }
+        .wax-seal {
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .ledger-row:hover {
+            background-color: rgba(241, 232, 205, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md parchment-texture min-h-screen flex">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-high border-r border-outline-variant flex flex-col p-gutter shadow-md z-50">
+<div class="mb-10">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-12 h-12 rounded-full bg-surface flex items-center justify-center shadow-sm overflow-hidden border border-outline-variant">
+<img alt="Pustakalaya Logo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLsNQk0wCd8bL4CXgyldQjB9feV5vGst7NEjB1H0uhHpch1Ez5fapkURxTq6BrGT8V6IPmZJD6IHRIIF8pYBaIO8daWWgmizxysZaXlp0kGyok0ODwJviXBFkBB-Qt_JL0-vfwZ6l956MLs5HrgmIynxf1j6oCVIJpPbmc27aKBMU5MqmUxoeY7sKrcpqdTeSL9rGNZQOpCGpebD2U9R9KaZecVwLYOkChuqvo_uP4N1NUjleuu2pNJ84Q">
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md text-primary leading-tight">Librarian Portal</h1>
+<p class="text-caption font-caption italic text-on-surface-variant">Ancient Archive Access</p>
+</div>
+</div>
+<nav class="space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-primary-fixed-dim/20 rounded-lg transition-colors duration-400 group cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined text-primary">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold transition-all duration-400 cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+<span class="font-body-md">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-primary-fixed-dim/20 rounded-lg transition-colors duration-400 group cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined text-primary">history_edu</span>
+<span class="font-body-md">Lending Logs</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-primary-fixed-dim/20 rounded-lg transition-colors duration-400 group cursor-pointer active:scale-98" href="#">
+<span class="material-symbols-outlined text-primary">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</nav>
+</div>
+<button class="mt-4 mb-8 bg-secondary text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 font-label-md uppercase tracking-widest shadow-lg hover:brightness-110 active:scale-95 transition-all duration-400">
+<span class="material-symbols-outlined">add</span>
+        New Entry
+    </button>
+<div class="mt-auto space-y-2">
+<hr class="dotted-divider mb-4">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-primary transition-colors duration-400 font-body-md" href="#">
+<span class="material-symbols-outlined text-primary">help</span>
+            Help
+        </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-primary transition-colors duration-400 font-body-md" href="#">
+<span class="material-symbols-outlined text-primary">logout</span>
+            Logout
+        </a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 flex-1 flex flex-col min-h-screen">
+<!-- TopNavBar Component -->
+<header class="sticky top-0 z-40 w-full bg-surface-container-low border-b border-outline-variant shadow-sm px-margin-desktop py-4 flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="h-8 w-auto flex items-center">
+<img alt="Pustakalaya Branding" class="h-full" src="https://lh3.googleusercontent.com/aida/AP1WRLsNQk0wCd8bL4CXgyldQjB9feV5vGst7NEjB1H0uhHpch1Ez5fapkURxTq6BrGT8V6IPmZJD6IHRIIF8pYBaIO8daWWgmizxysZaXlp0kGyok0ODwJviXBFkBB-Qt_JL0-vfwZ6l956MLs5HrgmIynxf1j6oCVIJpPbmc27aKBMU5MqmUxoeY7sKrcpqdTeSL9rGNZQOpCGpebD2U9R9KaZecVwLYOkChuqvo_uP4N1NUjleuu2pNJ84Q">
+</div>
+<span class="text-outline">/</span>
+<span class="font-label-md text-label-md uppercase tracking-widest text-secondary border-b-2 border-secondary pb-1">Inventory Management</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden md:block">
+<input class="bg-surface-container-highest border-b border-primary focus:border-tertiary outline-none px-4 py-2 text-body-md font-body-md w-64 italic transition-all duration-400 placeholder:opacity-50" placeholder="Search archive..." type="text">
+<span class="material-symbols-outlined absolute right-2 top-2 text-primary">search</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-label-md font-label-md uppercase tracking-tight text-on-surface-variant">Archivist Smith</span>
+<img class="w-10 h-10 rounded-full border border-outline object-cover" data-alt="Librarian portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgoOkmnumZNf9-XzHQkK_3DEAyclP6F_JVPUSc35NWVtLJw6BNUKoK_nqZo3L7UqQ4R3HIK-oDMNvoN6rXJkSJJQH1hLfWnOIAlfUD8dYoIO9PmvJ_S9Jt0zW4l2lwJ9W2dWhMXtTNOpU5lrRgmMXoq_FClZq9CRwPMZX6WQ3lpMygG-XsTBbFhlD7aqOqTsAeMydU_kKOOgG1JIPO5_pZaKmjvt5kTEr7tY_xLYZw_ewC0ASvPxhNWO47nUadmpaZEcRHaPP_mw">
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<section class="p-margin-desktop max-w-container-max mx-auto w-full flex-1">
+<!-- Header Section -->
+<div class="mb-10 flex justify-between items-end">
+<div>
+<h2 class="font-headline-xl text-headline-xl text-primary">The Great Inventory</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-2xl mt-2 italic">A curated ledger of all magical and mundane volumes currently held within the sanctuary of the Pustakalaya's archives.</p>
+</div>
+<div class="flex gap-3">
+<div class="relative group">
+<button class="flex items-center gap-2 bg-surface-container-highest px-4 py-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">filter_list</span>
+<span class="text-label-md font-label-md uppercase">Filter Genre</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+<button class="flex items-center gap-2 bg-surface-container-highest px-4 py-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">download</span>
+<span class="text-label-md font-label-md uppercase">Export PDF</span>
+</button>
+</div>
+</div>
+<!-- Bento Grid - Highlights -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-12">
+<div class="col-span-1 bg-surface-container-low p-6 rounded-lg border border-outline-variant shadow-sm relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[80px]">library_books</span>
+</div>
+<p class="text-label-md font-label-md uppercase text-on-surface-variant">Total Volumes</p>
+<h3 class="text-headline-lg font-headline-lg text-primary">12,482</h3>
+<p class="text-caption font-caption text-primary mt-2">+14 from last month</p>
+</div>
+<div class="col-span-1 bg-surface-container-low p-6 rounded-lg border border-outline-variant shadow-sm relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[80px]">person_edit</span>
+</div>
+<p class="text-label-md font-label-md uppercase text-on-surface-variant">Active Authors</p>
+<h3 class="text-headline-lg font-headline-lg text-primary">3,109</h3>
+</div>
+<div class="col-span-2 bg-error-container p-6 rounded-lg border border-secondary shadow-sm flex justify-between items-center relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[100px] text-on-secondary-container">priority_high</span>
+</div>
+<div>
+<p class="text-label-md font-label-md uppercase text-on-secondary-container font-bold">Urgent Restock Needed</p>
+<h3 class="text-headline-lg font-headline-lg text-on-secondary-container">24 Titles Low</h3>
+</div>
+<div class="wax-seal w-16 h-16 bg-secondary rounded-full flex items-center justify-center border-2 border-[#fff9ed]/30 z-10">
+<span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+</div>
+</div>
+<!-- Main Inventory Table (Ledger Style) -->
+<div class="bg-surface-container-low rounded-lg border border-outline-variant overflow-hidden shadow-md">
+<!-- Search/Filter Bar for Table -->
+<div class="bg-surface-container-high px-6 py-3 border-b border-outline-variant flex flex-wrap gap-4 items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-label-md font-label-md uppercase text-on-surface-variant">Showing:</span>
+<select class="bg-transparent border-none text-label-md font-label-md uppercase text-primary focus:ring-0 cursor-pointer">
+<option>All Archives</option>
+<option>East Wing</option>
+<option>Forbidden Section</option>
+<option>Basement Vaults</option>
+</select>
+</div>
+<div class="relative">
+<input class="bg-surface-container-highest/50 border border-outline-variant rounded px-3 py-1 text-caption italic focus:outline-none focus:border-primary w-48" placeholder="Quick find..." type="text">
+<span class="material-symbols-outlined absolute right-2 top-1.5 text-sm text-outline">search</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-high border-b border-outline-variant">
+<tr>
+<th class="px-6 py-4 font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Title</th>
+<th class="px-6 py-4 font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Author</th>
+<th class="px-6 py-4 font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Genre</th>
+<th class="px-6 py-4 font-label-md text-label-md uppercase tracking-wider text-on-surface-variant text-center">Stock Quantity</th>
+<th class="px-6 py-4 font-label-md text-label-md uppercase tracking-wider text-on-surface-variant text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-dotted divide-outline">
+<!-- Row 1 -->
+<tr class="ledger-row transition-all duration-400">
+<td class="px-6 py-5">
+<div class="font-headline-md text-headline-md text-primary">The Alchemy of Echoes</div>
+<div class="text-caption font-caption italic text-on-surface-variant">ISBN: 978-0123456789</div>
+</td>
+<td class="px-6 py-5 font-body-md text-on-surface">Elias Thorne</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-surface-container-highest border border-outline-variant rounded-full text-caption font-caption">Arcane Arts</span>
+</td>
+<td class="px-6 py-5 text-center font-bold text-primary">42</td>
+<td class="px-6 py-5 text-right space-x-2">
+<button class="px-4 py-1 border border-primary text-primary hover:bg-primary hover:text-white transition-all duration-400 font-label-md uppercase rounded">View</button>
+<button class="px-4 py-1 bg-primary text-white hover:brightness-125 transition-all duration-400 font-label-md uppercase rounded">Edit</button>
+</td>
+</tr>
+<!-- Row 2 (Low Stock Alert) -->
+<tr class="ledger-row bg-error-container/10 border-l-4 border-secondary transition-all duration-400">
+<td class="px-6 py-5">
+<div class="font-headline-md text-headline-md text-primary">Shadows in the Attic</div>
+<div class="text-caption font-caption italic text-on-surface-variant">ISBN: 978-9876543210</div>
+</td>
+<td class="px-6 py-5 font-body-md text-on-surface">Clara Vane</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-surface-container-highest border border-outline-variant rounded-full text-caption font-caption">Gothic Fiction</span>
+</td>
+<td class="px-6 py-5 text-center">
+<div class="flex items-center justify-center gap-1 text-secondary font-bold">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">priority_high</span>
+                                    3
+                                </div>
+<div class="text-[10px] uppercase font-bold text-secondary">Low Stock</div>
+</td>
+<td class="px-6 py-5 text-right space-x-2">
+<button class="px-4 py-1 border border-primary text-primary hover:bg-primary hover:text-white transition-all duration-400 font-label-md uppercase rounded">View</button>
+<button class="px-4 py-1 bg-primary text-white hover:brightness-125 transition-all duration-400 font-label-md uppercase rounded">Edit</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="ledger-row transition-all duration-400">
+<td class="px-6 py-5">
+<div class="font-headline-md text-headline-md text-primary">Botanical Wonders</div>
+<div class="text-caption font-caption italic text-on-surface-variant">ISBN: 978-4567890123</div>
+</td>
+<td class="px-6 py-5 font-body-md text-on-surface">Oliver Finch</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-surface-container-highest border border-outline-variant rounded-full text-caption font-caption">Natural Science</span>
+</td>
+<td class="px-6 py-5 text-center font-bold text-primary">12</td>
+<td class="px-6 py-5 text-right space-x-2">
+<button class="px-4 py-1 border border-primary text-primary hover:bg-primary hover:text-white transition-all duration-400 font-label-md uppercase rounded">View</button>
+<button class="px-4 py-1 bg-primary text-white hover:brightness-125 transition-all duration-400 font-label-md uppercase rounded">Edit</button>
+</td>
+</tr>
+<!-- Row 4 (Low Stock Alert) -->
+<tr class="ledger-row bg-error-container/10 border-l-4 border-secondary transition-all duration-400">
+<td class="px-6 py-5">
+<div class="font-headline-md text-headline-md text-primary">The Last Archivist</div>
+<div class="text-caption font-caption italic text-on-surface-variant">ISBN: 978-5432109876</div>
+</td>
+<td class="px-6 py-5 font-body-md text-on-surface">Margot Sterling</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-surface-container-highest border border-outline-variant rounded-full text-caption font-caption">History</span>
+</td>
+<td class="px-6 py-5 text-center">
+<div class="flex items-center justify-center gap-1 text-secondary font-bold">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">priority_high</span>
+                                    1
+                                </div>
+<div class="text-[10px] uppercase font-bold text-secondary">Low Stock</div>
+</td>
+<td class="px-6 py-5 text-right space-x-2">
+<button class="px-4 py-1 border border-primary text-primary hover:bg-primary hover:text-white transition-all duration-400 font-label-md uppercase rounded">View</button>
+<button class="px-4 py-1 bg-primary text-white hover:brightness-125 transition-all duration-400 font-label-md uppercase rounded">Edit</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="ledger-row transition-all duration-400">
+<td class="px-6 py-5">
+<div class="font-headline-md text-headline-md text-primary">Starlight Navigation</div>
+<div class="text-caption font-caption italic text-on-surface-variant">ISBN: 978-2223334445</div>
+</td>
+<td class="px-6 py-5 font-body-md text-on-surface">Professor Orion</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-surface-container-highest border border-outline-variant rounded-full text-caption font-caption">Astronomy</span>
+</td>
+<td class="px-6 py-5 text-center font-bold text-primary">8</td>
+<td class="px-6 py-5 text-right space-x-2">
+<button class="px-4 py-1 border border-primary text-primary hover:bg-primary hover:text-white transition-all duration-400 font-label-md uppercase rounded">View</button>
+<button class="px-4 py-1 bg-primary text-white hover:brightness-125 transition-all duration-400 font-label-md uppercase rounded">Edit</button>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="ledger-row transition-all duration-400">
+<td class="px-6 py-5">
+<div class="font-headline-md text-headline-md text-primary">Whispers of the Weave</div>
+<div class="text-caption font-caption italic text-on-surface-variant">ISBN: 978-1112223334</div>
+</td>
+<td class="px-6 py-5 font-body-md text-on-surface">Lyra Moonbrook</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-surface-container-highest border border-outline-variant rounded-full text-caption font-caption">Enchantment</span>
+</td>
+<td class="px-6 py-5 text-center font-bold text-primary">15</td>
+<td class="px-6 py-5 text-right space-x-2">
+<button class="px-4 py-1 border border-primary text-primary hover:bg-primary hover:text-white transition-all duration-400 font-label-md uppercase rounded">View</button>
+<button class="px-4 py-1 bg-primary text-white hover:brightness-125 transition-all duration-400 font-label-md uppercase rounded">Edit</button>
+</td>
+</tr>
+<!-- Row 7 (Low Stock Alert) -->
+<tr class="ledger-row bg-error-container/10 border-l-4 border-secondary transition-all duration-400">
+<td class="px-6 py-5">
+<div class="font-headline-md text-headline-md text-primary">The Void Watcher's Journal</div>
+<div class="text-caption font-caption italic text-on-surface-variant">ISBN: 978-6667778889</div>
+</td>
+<td class="px-6 py-5 font-body-md text-on-surface">Unknown Author</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-surface-container-highest border border-outline-variant rounded-full text-caption font-caption">Dark Arts</span>
+</td>
+<td class="px-6 py-5 text-center">
+<div class="flex items-center justify-center gap-1 text-secondary font-bold">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">priority_high</span>
+                                    2
+                                </div>
+<div class="text-[10px] uppercase font-bold text-secondary">Low Stock</div>
+</td>
+<td class="px-6 py-5 text-right space-x-2">
+<button class="px-4 py-1 border border-primary text-primary hover:bg-primary hover:text-white transition-all duration-400 font-label-md uppercase rounded">View</button>
+<button class="px-4 py-1 bg-primary text-white hover:brightness-125 transition-all duration-400 font-label-md uppercase rounded">Edit</button>
+</td>
+</tr>
+<!-- Row 8 -->
+<tr class="ledger-row transition-all duration-400">
+<td class="px-6 py-5">
+<div class="font-headline-md text-headline-md text-primary">Runes of the North</div>
+<div class="text-caption font-caption italic text-on-surface-variant">ISBN: 978-3334445556</div>
+</td>
+<td class="px-6 py-5 font-body-md text-on-surface">Bjorn Ironside</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-surface-container-highest border border-outline-variant rounded-full text-caption font-caption">Linguistics</span>
+</td>
+<td class="px-6 py-5 text-center font-bold text-primary">27</td>
+<td class="px-6 py-5 text-right space-x-2">
+<button class="px-4 py-1 border border-primary text-primary hover:bg-primary hover:text-white transition-all duration-400 font-label-md uppercase rounded">View</button>
+<button class="px-4 py-1 bg-primary text-white hover:brightness-125 transition-all duration-400 font-label-md uppercase rounded">Edit</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="bg-surface-container-high px-6 py-4 flex items-center justify-between border-t border-outline-variant">
+<span class="text-caption font-caption text-on-surface-variant italic">Showing 1 to 8 of 12,482 entries</span>
+<div class="flex gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-white font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-surface-container-low">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-surface-container-low">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer Component -->
+<footer class="w-full mt-auto bg-surface-container-highest border-t border-dotted border-outline py-margin-desktop flex flex-col items-center gap-unit">
+<div class="h-12 w-auto mb-2 opacity-80 grayscale">
+<img alt="Pustakalaya Stamp" class="h-full" src="https://lh3.googleusercontent.com/aida/AP1WRLsNQk0wCd8bL4CXgyldQjB9feV5vGst7NEjB1H0uhHpch1Ez5fapkURxTq6BrGT8V6IPmZJD6IHRIIF8pYBaIO8daWWgmizxysZaXlp0kGyok0ODwJviXBFkBB-Qt_JL0-vfwZ6l956MLs5HrgmIynxf1j6oCVIJpPbmc27aKBMU5MqmUxoeY7sKrcpqdTeSL9rGNZQOpCGpebD2U9R9KaZecVwLYOkChuqvo_uP4N1NUjleuu2pNJ84Q">
+</div>
+<div class="flex gap-8">
+<a class="font-caption text-caption italic text-on-surface-variant hover:text-secondary transition-colors duration-400" href="#">Library Hours</a>
+<a class="font-caption text-caption italic text-on-surface-variant hover:text-secondary transition-colors duration-400" href="#">Address</a>
+<a class="font-caption text-caption italic text-on-surface-variant hover:text-secondary transition-colors duration-400" href="#">Contact the Archivist</a>
+</div>
+<p class="font-caption text-caption italic text-on-surface-variant opacity-70">© 1892 Pustakalaya Magical Library. All rights reserved.</p>
+</footer>
+</main>
+<!-- Subtle atmospheric overlay -->
+<div class="fixed inset-0 pointer-events-none opacity-[0.03] parchment-texture mix-blend-multiply"></div>
+<script>
+    // Micro-interactions: Table row pulse on hover
+    document.querySelectorAll('.ledger-row').forEach(row => {
+        row.addEventListener('mouseenter', () => {
+            row.style.transform = 'translateX(4px)';
+        });
+        row.addEventListener('mouseleave', () => {
+            row.style.transform = 'translateX(0px)';
+        });
+    });
+
+    // Search bar focus effect
+    const searchInputs = document.querySelectorAll('input[type="text"]');
+    searchInputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            input.parentElement.style.boxShadow = '0 4px 12px rgba(115, 92, 0, 0.1)';
+        });
+        input.addEventListener('blur', () => {
+            input.parentElement.style.boxShadow = 'none';
+        });
+    });
+</script>
+</body></html>

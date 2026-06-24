@@ -1,0 +1,347 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pustakalaya | Scribe into Ledger</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Literata:ital,wght@0,200..900;1,200..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "secondary-fixed-dim": "#ffb3ae",
+                    "surface-container": "#f7eed2",
+                    "on-secondary-fixed-variant": "#842424",
+                    "primary": "#061b0e",
+                    "primary-fixed-dim": "#b4cdb8",
+                    "on-secondary-container": "#74181a",
+                    "secondary-fixed": "#ffdad7",
+                    "surface-container-lowest": "#ffffff",
+                    "outline-variant": "#c3c8c1",
+                    "on-primary-fixed": "#0b2013",
+                    "tertiary-fixed": "#ffe088",
+                    "background": "#fff9ed",
+                    "on-primary-fixed-variant": "#364c3c",
+                    "surface-dim": "#e2dabf",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#fcf3d8",
+                    "tertiary-container": "#cba72f",
+                    "surface-container-high": "#f1e8cd",
+                    "tertiary": "#735c00",
+                    "surface-tint": "#4d6453",
+                    "tertiary-fixed-dim": "#e9c349",
+                    "on-secondary-fixed": "#410005",
+                    "on-surface-variant": "#434843",
+                    "surface-container-highest": "#ebe2c8",
+                    "on-tertiary-fixed": "#241a00",
+                    "on-background": "#1f1c0b",
+                    "surface-bright": "#fff9ed",
+                    "on-tertiary-container": "#4e3d00",
+                    "secondary-container": "#fe807a",
+                    "on-primary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed": "#d0e9d4",
+                    "on-surface": "#1f1c0b",
+                    "secondary": "#a33b39",
+                    "surface-variant": "#ebe2c8",
+                    "outline": "#737973",
+                    "surface": "#fff9ed",
+                    "on-primary-container": "#819986",
+                    "primary-container": "#1b3022",
+                    "inverse-primary": "#b4cdb8",
+                    "on-tertiary-fixed-variant": "#574500",
+                    "inverse-on-surface": "#faf0d5",
+                    "inverse-surface": "#35301e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "40px",
+                    "gutter": "24px",
+                    "container-max": "1200px",
+                    "unit": "8px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": ["EB Garamond"],
+                    "headline-xl": ["EB Garamond"],
+                    "headline-lg": ["EB Garamond"],
+                    "body-lg": ["Literata"],
+                    "caption": ["Literata"],
+                    "label-md": ["Literata"],
+                    "headline-lg-mobile": ["EB Garamond"],
+                    "body-md": ["Literata"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-image: radial-gradient(#ebe2c8 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+            background-color: #fff9ed;
+        }
+        .parchment-texture {
+            background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+        }
+        .wax-seal {
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3), 2px 2px 8px rgba(0,0,0,0.2);
+            background: linear-gradient(145deg, #a33b39, #630a10);
+        }
+        .dotted-divider {
+            background-image: radial-gradient(circle, #737973 1px, transparent 1px);
+            background-size: 8px 1px;
+            background-repeat: repeat-x;
+            height: 1px;
+            width: 100%;
+        }
+        .ledger-input {
+            border-bottom: 1.5px solid #737973;
+            transition: border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .ledger-input:focus {
+            border-bottom-color: #cba72f;
+            outline: none;
+            box-shadow: 0 4px 12px -4px rgba(203, 167, 47, 0.2);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-entry {
+            animation: fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-body-md text-on-background selection:bg-tertiary-fixed selection:text-on-tertiary-fixed">
+<!-- TopNavBar -->
+<nav class="bg-surface-container-low border-b border-outline-variant docked full-width top-0 z-50 shadow-sm">
+<div class="flex justify-between items-center px-margin-desktop py-4 w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A magical library logo featuring an ornate gold quill resting upon a leather-bound book, set against a deep forest green circular background. The style is classic and academic, with warm amber lighting highlighting the textures of the parchment and gold leaf." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2lzYzKIFghsKLFYXxT4mzOCz_Fd9lL8k8eFOtjNqh7QPkoBXzIq1bO_TPTzAe5B2WnFmEptJyUHqytVGRm_yLyMQPBRjpG151Et5oBbY2wxmWRvVjkN0f68-el0_d-MQt6m5UFUpAWzJiwCQLgx81aWuSHEvpG4jxbSY0ynZewObaWU7pq-5dXZcslpxUnsr6rxY0KyWbq17fZj0-g9fD08sVPQKpr-Avk-7OlTCEDv9FQ26CD6mIRiNURiyGCsPMDxGQ3VoysA">
+</div>
+<img src="https://lh3.googleusercontent.com/aida/AP1WRLsNQk0wCd8bL4CXgyldQjB9feV5vGst7NEjB1H0uhHpch1Ez5fapkURxTq6BrGT8V6IPmZJD6IHRIIF8pYBaIO8daWWgmizxysZaXlp0kGyok0ODwJviXBFkBB-Qt_JL0-vfwZ6l956MLs5HrgmIynxf1j6oCVIJpPbmc27aKBMU5MqmUxoeY7sKrcpqdTeSL9rGNZQOpCGpebD2U9R9KaZecVwLYOkChuqvo_uP4N1NUjleuu2pNJ84Q" alt="Pustakalaya Logo" class="h-8 w-auto object-contain">
+</div>
+<div class="hidden md:flex items-center gap-8 font-body-md text-label-md uppercase tracking-widest">
+<a class="text-on-surface-variant hover:text-secondary transition-all duration-400" href="#">Books</a>
+<a class="text-on-surface-variant hover:text-secondary transition-all duration-400" href="#">Authors</a>
+<a class="text-on-surface-variant hover:text-secondary transition-all duration-400" href="#">Genres</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-secondary border-b-2 border-secondary pb-1 font-body-md text-label-md uppercase tracking-widest">Admin Portal</button>
+<div class="w-10 h-10 rounded-full border border-outline p-0.5">
+<img class="w-full h-full rounded-full object-cover" data-alt="A portrait of an elderly librarian with silver hair and wire-rimmed glasses, wearing a burgundy velvet vest and a white linen shirt. The setting is a dim library with shelves of ancient books blurred in the background, creating a soft, scholarly atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmaJbRAbOLPhJ0xA792PWSOpRZ7MVQ_aJtZDl4-RLPt-zEulU3a1Dd1Ej-1pfUdasutQBmZpK5k0Ve_lgW-egp8Z6-fWM8XRfaH7qogiK3NwDZc04-qot4MMpBPUawOrWfa8Bsb8hhdyWfTf2b3uyYGLmMEF0lcPnyE2Pb3rmBcRSebS6LY51JCj3tL6_V0daF1KZUizMUxh381aT2MnAVVby-TSBEA2WLf87Aw6KMD8m4r74lwOBQm1RQJiVzHX9uH33xFEpQxw">
+</div>
+</div>
+</div>
+</nav>
+<main class="flex-grow flex flex-col items-center py-16 px-margin-mobile md:px-margin-desktop relative overflow-hidden">
+<!-- Background Elements -->
+<div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none parchment-texture"></div>
+<!-- Intake Form Container -->
+<div class="w-full max-w-4xl bg-surface-container-high border border-outline-variant shadow-md p-10 md:p-16 relative animate-entry z-10">
+<!-- Header Decorative -->
+<div class="flex flex-col items-center mb-12">
+<span class="material-symbols-outlined text-primary text-5xl mb-4">history_edu</span>
+<h1 class="font-headline-xl text-headline-xl text-primary text-center">New Entry Intake</h1>
+<div class="dotted-divider mt-4 mb-2"></div>
+<p class="font-caption text-caption italic text-on-surface-variant">Archivist Document Ref: #LIB-ENTRY-2024-X</p>
+</div>
+<!-- Form Content -->
+<form class="grid grid-cols-1 md:grid-cols-2 gap-12" id="intakeForm" novalidate="">
+<!-- Left Column: Primary Details -->
+<div class="flex flex-col gap-8">
+<!-- Title Field -->
+<div class="flex flex-col gap-2 group">
+<label class="font-headline-md text-body-md italic text-primary" for="title">Volume Title</label>
+<input class="ledger-input bg-transparent py-2 font-body-lg text-body-lg placeholder:text-outline-variant" id="title" name="title" placeholder="e.g. The Whispering Vellum" required="" type="text">
+<p class="error-msg hidden font-caption text-caption text-error italic mt-1">Pray, the title is missing from the record.</p>
+</div>
+<!-- Author Selection -->
+<div class="flex flex-col gap-2 group">
+<label class="font-headline-md text-body-md italic text-primary" for="author">Scribed By (Author)</label>
+<select class="ledger-input bg-transparent py-2 font-body-lg text-body-lg text-on-surface appearance-none" id="author" name="author" required="">
+<option disabled="" selected="" value="">Select an Author</option>
+<option value="alistair-blackwood">Alistair Blackwood</option>
+<option value="elara-vane">Elara Vane</option>
+<option value="julian-thorne">Julian Thorne</option>
+<option value="morgana-ley">Morgana Ley</option>
+</select>
+<p class="error-msg hidden font-caption text-caption text-error italic mt-1">An author's hand must be acknowledged.</p>
+</div>
+<!-- Genre & Stock Row -->
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-2 group">
+<label class="font-headline-md text-body-md italic text-primary" for="genre">Lore Category</label>
+<select class="ledger-input bg-transparent py-2 font-body-lg text-body-lg text-on-surface appearance-none" id="genre" name="genre" required="">
+<option disabled="" selected="" value="">Select Lore</option>
+<option value="mythology">Ancient Mythology</option>
+<option value="herbology">Forbidden Herbology</option>
+<option value="alchemy">Alchemical Arts</option>
+<option value="poetry">Lyrical Poetry</option>
+</select>
+</div>
+<div class="flex flex-col gap-2 group">
+<label class="font-headline-md text-body-md italic text-primary" for="stock">Stock Count</label>
+<input class="ledger-input bg-transparent py-2 font-body-lg text-body-lg" id="stock" min="0" name="stock" required="" type="number" value="1">
+</div>
+</div>
+</div>
+<!-- Right Column: Visual Preservation -->
+<div class="flex flex-col">
+<label class="font-headline-md text-body-md italic text-primary mb-2">Preserve the Visual</label>
+<div class="border-2 border-dashed border-outline-variant bg-surface-container flex flex-col items-center justify-center py-12 px-6 text-center group cursor-pointer transition-colors duration-400 hover:bg-surface-container-low hover:border-tertiary" id="dropzone">
+<div class="w-24 h-32 border border-outline-variant bg-surface-variant flex items-center justify-center mb-4 transition-transform duration-400 group-hover:scale-105 shadow-sm overflow-hidden">
+<img class="hidden w-full h-full object-cover" data-alt="A vintage book cover with intricate gold filigree embossing on dark weathered leather. The title 'Sample Text' is etched in elegant calligraphy. The overall style is moody and scholarly, with cinematic lighting highlighting the texture of the old leather and the shimmer of the gold leaf." id="preview" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMQONGfdBEYlRpT7GTUoDwA8UwHz0As8uXGc5gGUFuWqN7OgajGFOyn171FiKbzSTYEGsCnI2HXhZeAMcpjmAJ3YfWYPQo52VbJXXlXNwU9A6SXpAo9NFxgyiOObe9k0xySL-WIs2IwSovDf7PvzYAfdtklghJPxhHhQOHi5X_GHv9rJe3OlUEMS-3n8KJhYUbmasc86nGxcvFq3MqCJl1nv-n5pAGXqoGnAB6S3124nR1d8bkXaz9Z0UQrOk-_pK0nk2go5tf8g">
+<span class="material-symbols-outlined text-4xl text-outline-variant" id="placeholder-icon">image</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-1">Transfer Cover Image</p>
+<p class="font-caption text-caption text-outline italic">Accepted formats: .jpg, .png, .vellum</p>
+<input accept="image/*" class="hidden" id="filePicker" type="file">
+</div>
+<p class="error-msg hidden font-caption text-caption text-error italic mt-2 text-center">The tome requires a visual anchor.</p>
+</div>
+<!-- Footer Action -->
+<div class="md:col-span-2 flex flex-col items-center mt-8 gap-6">
+<div class="dotted-divider mb-4"></div>
+<div class="flex items-center gap-8">
+<button class="font-body-md text-label-md uppercase tracking-widest text-on-surface-variant hover:text-secondary transition-colors duration-400" type="button">
+                            Clear Scroll
+                        </button>
+<button class="group flex items-center gap-4 px-8 py-3 bg-[#630A10] text-white rounded-sm shadow-md transition-all duration-400 hover:bg-[#a33b39] active:scale-95" type="submit">
+<span class="font-body-lg text-body-lg font-bold">Scribe into Ledger</span>
+<div class="wax-seal w-8 h-8 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-sm text-tertiary-fixed" style="font-variation-settings: 'FILL' 1;">history_edu</span>
+</div>
+</button>
+</div>
+</div>
+</form>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest border-t border-dotted border-outline w-full mt-auto py-margin-desktop">
+<div class="flex flex-col items-center gap-4 w-full px-margin-desktop">
+<img src="https://lh3.googleusercontent.com/aida/AP1WRLsNQk0wCd8bL4CXgyldQjB9feV5vGst7NEjB1H0uhHpch1Ez5fapkURxTq6BrGT8V6IPmZJD6IHRIIF8pYBaIO8daWWgmizxysZaXlp0kGyok0ODwJviXBFkBB-Qt_JL0-vfwZ6l956MLs5HrgmIynxf1j6oCVIJpPbmc27aKBMU5MqmUxoeY7sKrcpqdTeSL9rGNZQOpCGpebD2U9R9KaZecVwLYOkChuqvo_uP4N1NUjleuu2pNJ84Q" alt="Pustakalaya Logo" class="h-10 w-auto object-contain">
+<div class="flex gap-8 font-caption text-caption italic text-on-surface-variant">
+<a class="hover:text-secondary transition-colors" href="#">Library Hours</a>
+<a class="hover:text-secondary transition-colors" href="#">Address</a>
+<a class="hover:text-secondary transition-colors" href="#">Contact the Archivist</a>
+</div>
+<p class="font-caption text-caption italic text-on-surface-variant opacity-70 mt-4">© 1892 Pustakalaya Magical Library. All rights reserved.</p>
+</div>
+</footer>
+<script>
+        // Form Validation Logic
+        const form = document.getElementById('intakeForm');
+        const filePicker = document.getElementById('filePicker');
+        const dropzone = document.getElementById('dropzone');
+        const preview = document.getElementById('preview');
+        const placeholderIcon = document.getElementById('placeholder-icon');
+
+        // Handle Image Upload UI
+        dropzone.addEventListener('click', () => filePicker.click());
+        
+        filePicker.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    preview.src = event.target.result;
+                    preview.classList.remove('hidden');
+                    placeholderIcon.classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Prevention of negative stock
+        document.getElementById('stock').addEventListener('input', function(e) {
+            if(this.value < 0) this.value = 0;
+        });
+
+        // Form Submit Validation
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+            
+            // Basic required check
+            const inputs = form.querySelectorAll('input[required], select[required]');
+            inputs.forEach(input => {
+                const errorMsg = input.parentElement.querySelector('.error-msg');
+                if (!input.value) {
+                    input.classList.add('border-error');
+                    if(errorMsg) errorMsg.classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    input.classList.remove('border-error');
+                    if(errorMsg) errorMsg.classList.add('hidden');
+                }
+            });
+
+            // Image check
+            const imageError = dropzone.parentElement.querySelector('.error-msg');
+            if (preview.classList.contains('hidden')) {
+                dropzone.classList.add('border-error');
+                imageError.classList.remove('hidden');
+                isValid = false;
+            } else {
+                dropzone.classList.remove('border-error');
+                imageError.classList.add('hidden');
+            }
+
+            if (isValid) {
+                // Success micro-interaction
+                const btn = form.querySelector('button[type="submit"]');
+                const originalText = btn.querySelector('span').innerText;
+                btn.querySelector('span').innerText = "Vellum Recorded...";
+                btn.classList.add('bg-primary');
+                
+                setTimeout(() => {
+                    alert("The entry has been successfully inscribed into the ancient ledger.");
+                    form.reset();
+                    preview.classList.add('hidden');
+                    placeholderIcon.classList.remove('hidden');
+                    btn.querySelector('span').innerText = originalText;
+                    btn.classList.remove('bg-primary');
+                }, 1000);
+            }
+        });
+
+        // Hover effect for ledger feel
+        const ledgerInputs = document.querySelectorAll('.ledger-input');
+        ledgerInputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('opacity-100');
+            });
+        });
+    </script>
+
+
+</body></html>

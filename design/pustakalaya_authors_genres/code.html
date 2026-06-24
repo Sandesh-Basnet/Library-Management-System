@@ -1,0 +1,390 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pustakalaya | Archives &amp; Registers</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&amp;family=Literata:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "secondary-fixed-dim": "#ffb3ae",
+                    "surface-container": "#f7eed2",
+                    "on-secondary-fixed-variant": "#842424",
+                    "primary": "#061b0e",
+                    "primary-fixed-dim": "#b4cdb8",
+                    "on-secondary-container": "#74181a",
+                    "secondary-fixed": "#ffdad7",
+                    "surface-container-lowest": "#ffffff",
+                    "outline-variant": "#c3c8c1",
+                    "on-primary-fixed": "#0b2013",
+                    "tertiary-fixed": "#ffe088",
+                    "background": "#fff9ed",
+                    "on-primary-fixed-variant": "#364c3c",
+                    "surface-dim": "#e2dabf",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#fcf3d8",
+                    "tertiary-container": "#cba72f",
+                    "surface-container-high": "#f1e8cd",
+                    "tertiary": "#735c00",
+                    "surface-tint": "#4d6453",
+                    "tertiary-fixed-dim": "#e9c349",
+                    "on-secondary-fixed": "#410005",
+                    "on-surface-variant": "#434843",
+                    "surface-container-highest": "#ebe2c8",
+                    "on-tertiary-fixed": "#241a00",
+                    "on-background": "#1f1c0b",
+                    "surface-bright": "#fff9ed",
+                    "on-tertiary-container": "#4e3d00",
+                    "secondary-container": "#fe807a",
+                    "on-primary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed": "#d0e9d4",
+                    "on-surface": "#1f1c0b",
+                    "secondary": "#a33b39",
+                    "surface-variant": "#ebe2c8",
+                    "outline": "#737973",
+                    "surface": "#fff9ed",
+                    "on-primary-container": "#819986",
+                    "primary-container": "#1b3022",
+                    "inverse-primary": "#b4cdb8",
+                    "on-tertiary-fixed-variant": "#574500",
+                    "inverse-on-surface": "#faf0d5",
+                    "inverse-surface": "#35301e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "40px",
+                    "gutter": "24px",
+                    "container-max": "1200px",
+                    "unit": "8px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": ["EB Garamond"],
+                    "headline-xl": ["EB Garamond"],
+                    "headline-lg": ["EB Garamond"],
+                    "body-lg": ["Literata"],
+                    "caption": ["Literata"],
+                    "label-md": ["Literata"],
+                    "headline-lg-mobile": ["EB Garamond"],
+                    "body-md": ["Literata"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #fff9ed;
+            background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+            scroll-behavior: smooth;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ledger-row {
+            border-bottom: 1px dotted #737973;
+            transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .ledger-row:hover {
+            background-color: rgba(77, 100, 83, 0.05);
+        }
+        .active-tab {
+            border-bottom: 2px solid #a33b39;
+            color: #a33b39;
+        }
+        .inner-emboss {
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f7eed2;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #4d6453;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="text-on-background selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- Sidebar Navigation Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-high border-r border-outline-variant flex flex-col p-gutter z-50">
+<div class="mb-10">
+<div class="w-full mb-2"><img src="https://lh3.googleusercontent.com/aida/AP1WRLsNQk0wCd8bL4CXgyldQjB9feV5vGst7NEjB1H0uhHpch1Ez5fapkURxTq6BrGT8V6IPmZJD6IHRIIF8pYBaIO8daWWgmizxysZaXlp0kGyok0ODwJviXBFkBB-Qt_JL0-vfwZ6l956MLs5HrgmIynxf1j6oCVIJpPbmc27aKBMU5MqmUxoeY7sKrcpqdTeSL9rGNZQOpCGpebD2U9R9KaZecVwLYOkChuqvo_uP4N1NUjleuu2pNJ84Q" alt="Pustakalaya Logo" class="w-32 h-auto"></div>
+<p class="font-body-md text-caption text-on-surface-variant opacity-70">Ancient Archive Access</p>
+</div>
+<nav class="flex-grow space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all duration-400" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold shadow-sm" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-body-md">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all duration-400" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-body-md">Lending Logs</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all duration-400" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4 space-y-2">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-secondary transition-colors duration-400" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-body-md">Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-secondary transition-colors duration-400" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md">Logout</span>
+</a>
+<div class="flex items-center gap-3 px-4 py-2 mt-4">
+<img class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="A vintage circular wax seal stamp featuring a golden intricate library quill logo on a deep burgundy wax background, photorealistic texture with subtle cracks." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRKEYT2yub5QTAWI_CeuYFWXPVm0_4HgQyKrM1Sg-oSbAuu4umWwOnne2AznV6ehDbsRx44eOo8xgW6CuPYyJClOyJJ1QSeSUYUXWSsXMzoCXV7z67FNqyC8WGvNXZgWaadzVKATCFwVXwbJqb_rN-ADeemgNRcMtrzdoqUJ_yEbxC5kszK4giqpAncaE_he6z5gd7nwT6kAgZ50JcgB8zJJNqQlR9B3emg237fk-vLiHYM22Cax0MmaGKnjK0AU_aQlmC6ORDcw">
+<div>
+<p class="font-label-md text-label-md leading-none">Archivist</p>
+<p class="text-[10px] font-caption italic opacity-60 uppercase tracking-tighter">Admin Seal</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen p-margin-desktop flex flex-col">
+<!-- Header & Action Row -->
+<header class="flex justify-between items-end mb-12">
+<div>
+<h2 class="font-headline-xl text-headline-xl text-primary">Archive Registers</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant italic">Formal indices of authors and literary domains.</p>
+</div>
+<div class="flex gap-4">
+<button class="group relative px-6 py-2 bg-secondary text-on-secondary rounded-sm font-label-md inner-emboss active:scale-95 transition-all duration-400 flex items-center gap-2" onclick="toggleSection('authors')">
+<span class="material-symbols-outlined text-[20px]">person_add</span>
+                    Register Author
+                </button>
+<button class="group relative px-6 py-2 border border-tertiary-container text-tertiary font-label-md bg-surface-container-low hover:bg-surface-container active:scale-95 transition-all duration-400 flex items-center gap-2" onclick="toggleSection('genres')">
+<span class="material-symbols-outlined text-[20px]">category</span>
+                    Define Genre
+                </button>
+</div>
+</header>
+<!-- Tab Navigation -->
+<div class="flex gap-8 mb-8 border-b border-outline-variant">
+<button class="pb-3 font-label-md text-label-md active-tab uppercase tracking-widest transition-all duration-400" id="tab-authors" onclick="showPane('authors')">Authors Index</button>
+<button class="pb-3 font-label-md text-label-md text-on-surface-variant hover:text-secondary uppercase tracking-widest transition-all duration-400" id="tab-genres" onclick="showPane('genres')">Genre Lexicon</button>
+</div>
+<!-- Content Area -->
+<div class="flex-grow">
+<!-- Authors Section -->
+<section class="space-y-6" id="pane-authors">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter font-label-md text-label-md text-on-surface-variant border-b border-primary pb-2 opacity-60 uppercase">
+<div class="md:col-span-1">Ref.</div>
+<div class="md:col-span-3">Archived Name</div>
+<div class="md:col-span-5">Curated Biography</div>
+<div class="md:col-span-2">Works</div>
+<div class="md:col-span-1 text-right">Actions</div>
+</div>
+<div class="divide-y divide-dotted divide-outline">
+<!-- Ledger Entry 1 -->
+<div class="ledger-row grid grid-cols-1 md:grid-cols-12 gap-gutter py-6 items-start">
+<div class="md:col-span-1 font-caption text-secondary">#A-892</div>
+<div class="md:col-span-3">
+<span class="font-headline-md text-primary block">Seraphina Thorne</span>
+<span class="text-caption italic font-caption text-on-surface-variant">Victorian Necromancy</span>
+</div>
+<div class="md:col-span-5 font-body-md text-body-md leading-relaxed pr-4">
+                            Pioneered the 'Ghost-Ink' technique in the late 19th century. Her manuscripts are famously readable only by candlelight in the presence of a feline familiar.
+                        </div>
+<div class="md:col-span-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">auto_stories</span>
+<span class="font-label-md">14 Tomes</span>
+</div>
+<div class="md:col-span-1 text-right">
+<button class="text-secondary hover:underline font-label-md">Edit</button>
+</div>
+</div>
+<!-- Ledger Entry 2 -->
+<div class="ledger-row grid grid-cols-1 md:grid-cols-12 gap-gutter py-6 items-start">
+<div class="md:col-span-1 font-caption text-secondary">#A-412</div>
+<div class="md:col-span-3">
+<span class="font-headline-md text-primary block">Alaric Vane</span>
+<span class="text-caption italic font-caption text-on-surface-variant">Celestial Navigation</span>
+</div>
+<div class="md:col-span-5 font-body-md text-body-md leading-relaxed pr-4">
+                            An eccentric astronomer whose prose reflects the chaotic beauty of the cosmos. His biography is largely written in starlight charts.
+                        </div>
+<div class="md:col-span-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">auto_stories</span>
+<span class="font-label-md">3 Tomes</span>
+</div>
+<div class="md:col-span-1 text-right">
+<button class="text-secondary hover:underline font-label-md">Edit</button>
+</div>
+</div>
+<!-- Ledger Entry 3 -->
+<div class="ledger-row grid grid-cols-1 md:grid-cols-12 gap-gutter py-6 items-start">
+<div class="md:col-span-1 font-caption text-secondary">#A-007</div>
+<div class="md:col-span-3">
+<span class="font-headline-md text-primary block">Beatrix Potter (Unbound)</span>
+<span class="text-caption italic font-caption text-on-surface-variant">Natural Alchemy</span>
+</div>
+<div class="md:col-span-5 font-body-md text-body-md leading-relaxed pr-4">
+                            Secret journals detailing the herbalist properties of regional mushrooms. Warning: Some pages may induce mild hallucinations if touched bare-handed.
+                        </div>
+<div class="md:col-span-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">auto_stories</span>
+<span class="font-label-md">22 Tomes</span>
+</div>
+<div class="md:col-span-1 text-right">
+<button class="text-secondary hover:underline font-label-md">Edit</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Genres Section -->
+<section class="hidden space-y-6" id="pane-genres">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter font-label-md text-label-md text-on-surface-variant border-b border-primary pb-2 opacity-60 uppercase">
+<div class="md:col-span-4">Genre Classification</div>
+<div class="md:col-span-5">Lexicon Description</div>
+<div class="md:col-span-2">Section</div>
+<div class="md:col-span-1 text-right">Actions</div>
+</div>
+<div class="divide-y divide-dotted divide-outline">
+<!-- Genre Entry 1 -->
+<div class="ledger-row grid grid-cols-1 md:grid-cols-12 gap-gutter py-6 items-center">
+<div class="md:col-span-4 flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-highest rounded border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">compost</span>
+</div>
+<div>
+<span class="font-headline-md text-primary block">Arcane History</span>
+<span class="text-caption font-caption text-on-surface-variant">Lore &amp; Rituals</span>
+</div>
+</div>
+<div class="md:col-span-5 font-body-md text-body-md pr-4">
+                            The study of magical events and the chronologies of the unseen world.
+                        </div>
+<div class="md:col-span-2">
+<span class="bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">East Wing - G4</span>
+</div>
+<div class="md:col-span-1 text-right">
+<button class="text-secondary hover:underline font-label-md">Edit</button>
+</div>
+</div>
+<!-- Genre Entry 2 -->
+<div class="ledger-row grid grid-cols-1 md:grid-cols-12 gap-gutter py-6 items-center">
+<div class="md:col-span-4 flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-highest rounded border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">forest</span>
+</div>
+<div>
+<span class="font-headline-md text-primary block">Sylvan Botany</span>
+<span class="text-caption font-caption text-on-surface-variant">Nature's Grimoire</span>
+</div>
+</div>
+<div class="md:col-span-5 font-body-md text-body-md pr-4">
+                            Compendiums on sentient flora and the curative powers of ancient groves.
+                        </div>
+<div class="md:col-span-2">
+<span class="bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Glasshouse - S1</span>
+</div>
+<div class="md:col-span-1 text-right">
+<button class="text-secondary hover:underline font-label-md">Edit</button>
+</div>
+</div>
+<!-- Genre Entry 3 -->
+<div class="ledger-row grid grid-cols-1 md:grid-cols-12 gap-gutter py-6 items-center">
+<div class="md:col-span-4 flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-highest rounded border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">castle</span>
+</div>
+<div>
+<span class="font-headline-md text-primary block">Gothic Architecture</span>
+<span class="text-caption font-caption text-on-surface-variant">Structural Hauntings</span>
+</div>
+</div>
+<div class="md:col-span-5 font-body-md text-body-md pr-4">
+                            Analysis of stone-born enchantments and the blueprints of legendary fortresses.
+                        </div>
+<div class="md:col-span-2">
+<span class="bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Basement - B2</span>
+</div>
+<div class="md:col-span-1 text-right">
+<button class="text-secondary hover:underline font-label-md">Edit</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer -->
+<footer class="w-full mt-24 flex flex-col items-center py-margin-desktop gap-unit border-t border-dotted border-outline opacity-60">
+
+<p class="font-caption text-caption italic text-on-surface-variant">© 1892 Pustakalaya Magical Library. All rights reserved.</p>
+<div class="flex gap-6 mt-4">
+<a class="font-caption text-caption text-on-surface-variant hover:text-secondary transition-colors duration-400" href="#">Library Hours</a>
+<a class="font-caption text-caption text-on-surface-variant hover:text-secondary transition-colors duration-400" href="#">Address</a>
+<a class="font-caption text-caption text-on-surface-variant hover:text-secondary transition-colors duration-400" href="#">Contact the Archivist</a>
+</div>
+</footer>
+</main>
+<!-- Micro-interactions Script -->
+<script>
+        function showPane(paneId) {
+            const authorPane = document.getElementById('pane-authors');
+            const genrePane = document.getElementById('pane-genres');
+            const authorTab = document.getElementById('tab-authors');
+            const genreTab = document.getElementById('tab-genres');
+
+            if (paneId === 'authors') {
+                authorPane.classList.remove('hidden');
+                genrePane.classList.add('hidden');
+                authorTab.classList.add('active-tab');
+                genreTab.classList.remove('active-tab');
+                authorTab.classList.remove('text-on-surface-variant');
+                genreTab.classList.add('text-on-surface-variant');
+            } else {
+                genrePane.classList.remove('hidden');
+                authorPane.classList.add('hidden');
+                genreTab.classList.add('active-tab');
+                authorTab.classList.remove('active-tab');
+                genreTab.classList.remove('text-on-surface-variant');
+                authorTab.classList.add('text-on-surface-variant');
+            }
+        }
+
+        // Atmospheric mouse glow effect (subtle)
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            // Removed raw div injection for performance, just logic check
+        });
+    </script>
+
+
+</body></html>
