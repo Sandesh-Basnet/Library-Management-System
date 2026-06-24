@@ -1,0 +1,153 @@
+/* Pustakalaya - Plain CSS stylesheet for Dark Academia Library */
+
+/* Custom properties for the dark academia palette */
+:root {
+  --color-surface: #fff9ed;
+  --color-surface-dim: #e2dabf;
+  --color-surface-bright: #fff9ed;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #fcf3d8;
+  --color-surface-container: #f7eed2;
+  --color-surface-container-high: #f1e8cd;
+  --color-surface-container-highest: #ebe2c8;
+  --color-on-surface: #1f1c0b;
+  --color-on-surface-variant: #434843;
+  --color-outline: #737973;
+  --color-outline-variant: #c3c8c1;
+  --color-primary: #061b0e;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #1b3022;
+  --color-on-primary-container: #819986;
+  --color-secondary: #a33b39;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #fe807a;
+  --color-on-secondary-container: #74181a;
+  --color-tertiary: #735c00;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #cba72f;
+  --color-on-tertiary-container: #4e3d00;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+}
+
+/* Atmospheric Styling */
+body {
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  font-family: 'Literata', serif;
+}
+
+.font-headline {
+  font-family: 'EB Garamond', serif;
+}
+
+.parchment-texture {
+  background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+}
+
+.book-shadow {
+  box-shadow: 20px 20px 40px -10px rgba(27, 48, 34, 0.15), 
+              5px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dotted-divider {
+  background-image: radial-gradient(circle, var(--color-outline) 1px, transparent 1px);
+  background-size: 6px 1px;
+  background-repeat: repeat-x;
+  height: 1px;
+  width: 100%;
+}
+
+/* Input Ledger Styles */
+.input-ledger {
+  border: none;
+  border-bottom: 1.5px solid var(--color-primary);
+  background: transparent;
+  padding: 8px 0;
+  font-family: 'Literata', serif;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input-ledger:focus {
+  outline: none;
+  border-bottom-color: var(--color-tertiary-container);
+  box-shadow: 0 4px 12px -6px var(--color-tertiary-fixed);
+}
+
+/* Wax Seal Style */
+.wax-seal {
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.4), 2px 4px 10px rgba(0,0,0,0.3);
+  background: linear-gradient(135deg, #a33b39 0%, #630a10 100%);
+  position: relative;
+  overflow: hidden;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wax-seal::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Book spine gradient */
+.book-spine {
+  width: 10px;
+  background: linear-gradient(to right, rgba(0,0,0,0.25), rgba(0,0,0,0));
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* Hover effects */
+.parchment-card {
+  background-image: url("https://www.transparenttextures.com/patterns/parchment.png");
+  box-shadow: 0 10px 30px -15px rgba(27, 48, 34, 0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.parchment-card:hover {
+  transform: translateY(-8px) rotate(-1deg);
+  box-shadow: 0 20px 40px -20px rgba(27, 48, 34, 0.25);
+}
+
+.ledger-row {
+  border-bottom: 1px dotted var(--color-outline);
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ledger-row:hover {
+  background-color: rgba(77, 100, 83, 0.05);
+}
+
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes drift {
+  from { transform: translateY(0) rotate(0deg); opacity: 0; }
+  50% { opacity: 0.5; }
+  to { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+
+.particle {
+  position: absolute;
+  background: rgba(115, 92, 0, 0.15);
+  border-radius: 50%;
+  animation: drift linear infinite;
+}

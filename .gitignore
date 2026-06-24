@@ -6,3 +6,6 @@ CLAUDE.md
 .github/copilot-instructions.md
 opencode.json
 opencode.jsonc
+
+# Design mockup code files
+design/**/code.html

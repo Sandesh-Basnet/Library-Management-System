@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archivist Login | पुस्तकालय</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts & Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Literata:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="./style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Literata', 'serif'],
+            serif: ['EB Garamond', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#fff9ed] text-[#1f1c0b] font-sans min-h-screen flex flex-col justify-center items-center relative py-12 px-6">
+
+  <!-- Parchment texture overlay -->
+  <div class="fixed inset-0 pointer-events-none opacity-[0.03] parchment-texture mix-blend-multiply z-0"></div>
+
+  <!-- Atmospheric drift particles -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="particle w-1.5 h-1.5 left-[15%] bottom-0" style="animation-duration: 18s; animation-delay: -2s;"></div>
+    <div class="particle w-2 h-2 left-[45%] bottom-0" style="animation-duration: 25s; animation-delay: -5s;"></div>
+    <div class="particle w-1 h-1 left-[75%] bottom-0" style="animation-duration: 14s; animation-delay: -1s;"></div>
+  </div>
+
+  <main class="relative z-10 w-full max-w-md flex flex-col items-center">
+    
+    <!-- Login Card container -->
+    <div class="parchment-texture w-full p-8 md:p-10 rounded-lg border border-[#c3c8c1] shadow-2xl relative overflow-hidden flex flex-col items-center bg-[#fff9ed]">
+      
+      <!-- Corner decorative borders -->
+      <div class="absolute top-4 left-4 w-6 h-6 border-t border-l border-[#061b0e]/30 rounded-tl"></div>
+      <div class="absolute top-4 right-4 w-6 h-6 border-t border-r border-[#061b0e]/30 rounded-tr"></div>
+      <div class="absolute bottom-4 left-4 w-6 h-6 border-b border-l border-[#061b0e]/30 rounded-bl"></div>
+      <div class="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-[#061b0e]/30 rounded-br"></div>
+
+      <!-- Pustakalaya Brand Logo -->
+      <div class="mb-6 relative w-24 h-24 flex items-center justify-center bg-[#fcf3d8] rounded-full p-2 border border-[#c3c8c1] shadow-sm">
+        <img
+          src="https://lh3.googleusercontent.com/aida/AP1WRLsNQk0wCd8bL4CXgyldQjB9feV5vGst7NEjB1H0uhHpch1Ez5fapkURxTq6BrGT8V6IPmZJD6IHRIIF8pYBaIO8daWWgmizxysZaXlp0kGyok0ODwJviXBFkBB-Qt_JL0-vfwZ6l956MLs5HrgmIynxf1j6oCVIJpPbmc27aKBMU5MqmUxoeY7sKrcpqdTeSL9rGNZQOpCGpebD2U9R9KaZecVwLYOkChuqvo_uP4N1NUjleuu2pNJ84Q"
+          alt="पुस्तकालय Logo"
+          class="w-full h-full object-contain rounded-full"
+        />
+      </div>
+
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h1 class="font-serif text-2xl text-[#061b0e] italic font-bold mb-2">Archivist Login</h1>
+        <p class="text-xs text-[#434843] max-w-[280px] mx-auto italic leading-relaxed">
+          Enter your credentials to manage the magical tome collection.
+        </p>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="w-full space-y-6" onsubmit="handleLogin(event)">
+        
+        <!-- Identity field -->
+        <div class="relative">
+          <label for="identity" class="block text-xs text-[#735c00] italic mb-1 font-semibold">
+            Archivist Identity
+          </label>
+          <div class="flex items-center gap-2 border-b border-[#061b0e] py-1.5 focus-within:border-[#cba72f] transition-all">
+            <span class="material-symbols-outlined text-[#061b0e]/60 text-lg">person_book</span>
+            <input 
+              id="identity"
+              type="text"
+              required
+              value="Librarian Smith"
+              placeholder="Name or Registry ID"
+              class="w-full bg-transparent border-none outline-none focus:ring-0 text-sm placeholder:text-[#434843]/40 text-[#1f1c0b]"
+            />
+          </div>
+        </div>
+
+        <!-- Cypher field -->
+        <div class="relative">
+          <label for="cypher" class="block text-xs text-[#735c00] italic mb-1 font-semibold">
+            Secret Cypher
+          </label>
+          <div class="flex items-center gap-2 border-b border-[#061b0e] py-1.5 focus-within:border-[#cba72f] transition-all">
+            <span class="material-symbols-outlined text-[#061b0e]/60 text-lg">key</span>
+            <input 
+              id="cypher"
+              type="password"
+              placeholder="••••••••"
+              class="w-full bg-transparent border-none outline-none focus:ring-0 text-sm placeholder:text-[#434843]/40 text-[#1f1c0b]"
+            />
+          </div>
+        </div>
+
+        <!-- Submit Wax Seal Button -->
+        <div class="pt-4 flex flex-col items-center">
+          <button 
+            type="submit"
+            class="group relative flex flex-col items-center transition-transform duration-300 hover:scale-105 active:scale-95"
+          >
+            <div class="wax-seal w-16 h-16 rounded-full flex items-center justify-center mb-2 shadow-lg border-2 border-white/20 relative">
+              <span class="material-symbols-outlined text-white text-2xl group-hover:scale-110 transition-transform">lock_open</span>
+            </div>
+            <span class="text-[10px] text-[#a33b39] uppercase tracking-widest font-bold">Unlock the Archives</span>
+          </button>
+        </div>
+
+      </form>
+
+      <!-- Return back home link -->
+      <div class="mt-8">
+        <a href="./index.html" class="text-xs text-[#434843] hover:text-[#061b0e] transition-colors inline-flex items-center gap-1 font-semibold">
+          <span class="material-symbols-outlined text-sm">arrow_back</span>
+          Return to Public Catalog
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    function handleLogin(e) {
+      e.preventDefault();
+      const identity = document.getElementById('identity').value;
+      if (!identity.trim()) {
+        alert('Please provide an Archivist Identity.');
+        return;
+      }
+      alert('Credentials authenticated successfully! Welcome, ' + identity);
+      // Redirect to registers/dashboard view
+      window.location.href = './registers.html';
+    }
+  </script>
+</body>
+</html>
