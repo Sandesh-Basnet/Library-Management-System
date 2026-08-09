@@ -37,10 +37,10 @@
   </div>
 
   <main class="relative z-10 w-full max-w-md flex flex-col items-center">
-    
+
     <!-- Login Card container -->
     <div class="parchment-texture w-full p-8 md:p-10 rounded-lg border border-[#c3c8c1] shadow-2xl relative overflow-hidden flex flex-col items-center bg-[#fff9ed]">
-      
+
       <!-- Corner decorative borders -->
       <div class="absolute top-4 left-4 w-6 h-6 border-t border-l border-[#061b0e]/30 rounded-tl"></div>
       <div class="absolute top-4 right-4 w-6 h-6 border-t border-r border-[#061b0e]/30 rounded-tr"></div>
@@ -64,9 +64,15 @@
         </p>
       </div>
 
+      <!-- Error banner -->
+      <div id="loginBanner" class="hidden w-full mb-6 flex items-start gap-2 bg-[#fdf0ee] border border-[#a33b39]/40 text-[#630a10] text-xs italic rounded px-4 py-3">
+        <span class="material-symbols-outlined text-sm mt-0.5">error</span>
+        <span id="loginBannerText"></span>
+      </div>
+
       <!-- Login Form -->
-      <form id="loginForm" class="w-full space-y-6" onsubmit="handleLogin(event)">
-        
+      <form id="loginForm" class="w-full space-y-6" novalidate onsubmit="handleLogin(event)">
+
         <!-- Identity field -->
         <div class="relative">
           <label for="identity" class="block text-xs text-[#735c00] italic mb-1 font-semibold">
@@ -74,11 +80,13 @@
           </label>
           <div class="flex items-center gap-2 border-b border-[#061b0e] py-1.5 focus-within:border-[#cba72f] transition-all">
             <span class="material-symbols-outlined text-[#061b0e]/60 text-lg">person_book</span>
-            <input 
+            <input
               id="identity"
+              name="identity"
               type="text"
               required
-              value="Librarian Smith"
+              autocomplete="username"
+              value="archivist@library.dev"
               placeholder="Name or Registry ID"
               class="w-full bg-transparent border-none outline-none focus:ring-0 text-sm placeholder:text-[#434843]/40 text-[#1f1c0b]"
             />
@@ -92,9 +100,11 @@
           </label>
           <div class="flex items-center gap-2 border-b border-[#061b0e] py-1.5 focus-within:border-[#cba72f] transition-all">
             <span class="material-symbols-outlined text-[#061b0e]/60 text-lg">key</span>
-            <input 
+            <input
               id="cypher"
+              name="cypher"
               type="password"
+              autocomplete="current-password"
               placeholder="••••••••"
               class="w-full bg-transparent border-none outline-none focus:ring-0 text-sm placeholder:text-[#434843]/40 text-[#1f1c0b]"
             />
@@ -103,8 +113,9 @@
 
         <!-- Submit Wax Seal Button -->
         <div class="pt-4 flex flex-col items-center">
-          <button 
+          <button
             type="submit"
+            id="loginSubmit"
             class="group relative flex flex-col items-center transition-transform duration-300 hover:scale-105 active:scale-95"
           >
             <div class="wax-seal w-16 h-16 rounded-full flex items-center justify-center mb-2 shadow-lg border-2 border-white/20 relative">
@@ -116,8 +127,13 @@
 
       </form>
 
+      <!-- Demo credential hint -->
+      <p class="mt-4 text-[10px] text-[#434843]/60 italic text-center">
+        Demo account — identity: archivist@library.dev · cypher: archivist123
+      </p>
+
       <!-- Return back home link -->
-      <div class="mt-8">
+      <div class="mt-6">
         <a href="./index.html" class="text-xs text-[#434843] hover:text-[#061b0e] transition-colors inline-flex items-center gap-1 font-semibold">
           <span class="material-symbols-outlined text-sm">arrow_back</span>
           Return to Public Catalog
@@ -127,18 +143,70 @@
     </div>
   </main>
 
+  <script src="./js/common.js"></script>
   <script>
-    function handleLogin(e) {
-      e.preventDefault();
-      const identity = document.getElementById('identity').value;
-      if (!identity.trim()) {
-        alert('Please provide an Archivist Identity.');
-        return;
-      }
-      alert('Credentials authenticated successfully! Welcome, ' + identity);
-      // Redirect to registers/dashboard view
-      window.location.href = './registers.html';
+    const P = window.Pustakalaya;
+    const form = document.getElementById('loginForm');
+    const banner = document.getElementById('loginBanner');
+    const bannerText = document.getElementById('loginBannerText');
+
+    function showBanner(message) {
+      bannerText.textContent = message;
+      banner.classList.remove('hidden');
     }
+
+    function hideBanner() {
+      banner.classList.add('hidden');
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      hideBanner();
+      P.clearFormErrors(form);
+
+      const identity = document.getElementById('identity').value.trim();
+      const cypher = document.getElementById('cypher').value.trim();
+
+      let valid = true;
+      if (!identity) {
+        P.setFieldError(document.getElementById('identity'), 'Archivist identity is required.');
+        valid = false;
+      }
+      if (!cypher) {
+        P.setFieldError(document.getElementById('cypher'), 'Secret cypher is required.');
+        valid = false;
+      }
+      if (!valid) return;
+
+      const submit = document.getElementById('loginSubmit');
+      submit.disabled = true;
+
+      try {
+        await P.request('/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ identity, cypher }),
+        });
+        P.toast('Credentials authenticated! Welcome back, ' + identity.split('@')[0] + '.', 'success');
+        window.location.href = './registers.html';
+      } catch (err) {
+        submit.disabled = false;
+        if (err.status === 400 && err.body && err.body.errors) {
+          P.applyFieldErrors(form, err.body.errors, {
+            identity: '#identity',
+            cypher: '#cypher',
+          });
+        } else if (err.status === 401) {
+          showBanner('Invalid identity or cypher. The vault refuses to open.');
+        } else {
+          showBanner('The archive doors are unreachable. Pray, try again shortly.');
+        }
+      }
+    }
+
+    // Already authenticated? Skip the ritual.
+    P.currentUser().then((user) => {
+      if (user) window.location.href = './registers.html';
+    });
   </script>
 </body>
 </html>

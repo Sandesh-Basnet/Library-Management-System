@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Registers | पुस्तकालय</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts & Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Literata:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="./style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Literata', 'serif'],
+            serif: ['EB Garamond', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#fff9ed] text-[#1f1c0b] font-sans min-h-screen flex flex-col relative">
+
+  <!-- Parchment texture overlay -->
+  <div class="fixed inset-0 pointer-events-none opacity-[0.03] parchment-texture mix-blend-multiply z-0"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="border-b border-[#c3c8c1] bg-[#fcf3d8]/90 backdrop-blur sticky top-0 z-50">
+    <div class="flex justify-between items-center px-6 md:px-10 py-4 max-w-[1200px] mx-auto w-full">
+      <div class="flex items-center gap-4 cursor-pointer" onclick="window.location.href='./index.html'">
+        <div class="w-10 h-10 rounded-full bg-[#061b0e] flex items-center justify-center text-white overflow-hidden border border-[#b4cdb8]">
+          <span class="material-symbols-outlined text-[#ffe088]">auto_stories</span>
+        </div>
+        <span class="font-serif text-xl italic font-bold text-[#061b0e]">पुस्तकालय</span>
+      </div>
+
+      <div class="hidden md:flex items-center gap-8 text-sm uppercase tracking-widest font-semibold">
+        <a href="./index.html" class="text-[#434843] hover:text-[#061b0e] transition-colors">Books</a>
+        <a href="./registers.html" class="text-[#a33b39] border-b-2 border-[#a33b39] pb-1">Registers</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span class="text-xs italic text-[#434843] font-semibold hidden sm:inline" id="archivistName">Archivist</span>
+        <button onclick="Pustakalaya.toggleMenu('mobileMenu')" class="md:hidden text-[#061b0e] p-1" aria-label="Toggle menu">
+          <span class="material-symbols-outlined text-2xl">menu</span>
+        </button>
+        <button onclick="Pustakalaya.logout()" class="bg-[#a33b39] text-[#fff9ed] px-4 py-2 rounded text-xs uppercase tracking-widest font-bold hover:bg-[#630a10] transition-colors">
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-[#c3c8c1] bg-[#fcf3d8] px-6 py-4">
+      <a href="./index.html" class="block py-2 text-sm uppercase tracking-widest font-semibold text-[#434843] hover:text-[#061b0e]">Books</a>
+      <a href="./registers.html" class="block py-2 text-sm uppercase tracking-widest font-semibold text-[#a33b39]">Registers</a>
+      <button onclick="Pustakalaya.logout()" class="block w-full mt-2 bg-[#a33b39] text-[#fff9ed] text-center px-4 py-2 rounded text-xs uppercase tracking-widest font-bold">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-[1200px] mx-auto w-full px-6 md:px-10 py-10 flex-grow">
+
+    <!-- Top Row Header -->
+    <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10 pb-6 border-b border-[#737973]/20">
+      <div>
+        <h1 class="font-serif text-3xl text-[#061b0e] font-bold">Librarian Registers & Dashboard</h1>
+        <p class="text-xs italic text-[#434843] mt-1">Scribe newly discovered literature, oversee authors, and update lore genres.</p>
+      </div>
+      <a href="./intake.html" class="bg-[#1b3022] hover:bg-[#061b0e] text-[#fff9ed] px-6 py-3 rounded-lg text-xs uppercase tracking-widest font-bold shadow-md flex items-center gap-2 transition-transform duration-300 hover:scale-[0.98]">
+        <span class="material-symbols-outlined text-sm">edit_note</span>
+        Scribe New Tome
+      </a>
+    </header>
+
+    <!-- Stat Bento Grid Section -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div class="bg-[#fcf3d8] p-6 rounded-lg border border-[#c3c8c1] relative overflow-hidden group">
+        <div class="absolute -right-3 -bottom-3 text-[100px] text-[#735c00]/5 material-symbols-outlined pointer-events-none group-hover:scale-110 transition-transform">auto_stories</div>
+        <p class="text-[10px] text-[#434843] uppercase tracking-wider">Total Tomes Scribed</p>
+        <p class="font-serif text-3xl text-[#061b0e] font-bold mt-2" id="statBooks">–</p>
+        <p class="text-[10px] text-emerald-700 italic mt-1" id="statCopies">– Cumulative Volumes</p>
+      </div>
+      <div class="bg-[#fcf3d8] p-6 rounded-lg border border-[#c3c8c1] relative overflow-hidden group">
+        <div class="absolute -right-3 -bottom-3 text-[100px] text-[#735c00]/5 material-symbols-outlined pointer-events-none group-hover:scale-110 transition-transform">history_edu</div>
+        <p class="text-[10px] text-[#434843] uppercase tracking-wider">Archivist Specialisms</p>
+        <p class="font-serif text-3xl text-[#061b0e] font-bold mt-2" id="statAuthors">–</p>
+        <p class="text-[10px] text-[#434843] italic mt-1">Registered Scribes</p>
+      </div>
+      <div class="bg-[#fcf3d8] p-6 rounded-lg border border-[#c3c8c1] relative overflow-hidden group">
+        <div class="absolute -right-3 -bottom-3 text-[100px] text-[#735c00]/5 material-symbols-outlined pointer-events-none group-hover:scale-110 transition-transform">topic</div>
+        <p class="text-[10px] text-[#434843] uppercase tracking-wider">Rare Lore Genres</p>
+        <p class="font-serif text-3xl text-[#061b0e] font-bold mt-2" id="statGenres">–</p>
+        <p class="text-[10px] text-[#434843] italic mt-1">Inscribed Lexicon Descriptors</p>
+      </div>
+      <div class="bg-[#fcf3d8] p-6 rounded-lg border border-[#c3c8c1] relative overflow-hidden group">
+        <div class="absolute -right-3 -bottom-3 text-[100px] text-[#735c00]/5 material-symbols-outlined pointer-events-none group-hover:scale-110 transition-transform">release_alert</div>
+        <p class="text-[10px] text-[#434843] uppercase tracking-wider">Low Stock Tomes</p>
+        <p class="font-serif text-3xl text-[#a33b39] font-bold mt-2" id="statLowStock">–</p>
+        <p class="text-[10px] text-red-700 italic mt-1">Require Immediate Restocking</p>
+      </div>
+    </section>
+
+    <!-- Low Stock Alerts -->
+    <section class="mb-12">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="material-symbols-outlined text-[#a33b39]">release_alert</span>
+        <h2 class="font-serif text-xl text-[#061b0e] font-bold">Low Stock Alerts</h2>
+        <span class="text-[10px] bg-[#fdf0ee] text-[#a33b39] border border-[#a33b39]/40 px-2 py-0.5 rounded font-bold uppercase tracking-wider" id="lowStockCountBadge">0</span>
+      </div>
+      <div id="lowStockList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+    </section>
+
+    <!-- Books Register Table -->
+    <section class="bg-[#f1e8cd]/40 p-6 md:p-8 rounded-lg border border-[#c3c8c1] mb-10">
+      <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#735c00]">menu_book</span>
+          <h2 class="font-serif text-xl text-[#061b0e] font-bold">Tome Register</h2>
+        </div>
+        <span class="text-[10px] text-[#434843]/60 italic">Full inventory & condition ledger</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full min-w-[760px] text-left">
+          <thead>
+            <tr class="text-[10px] uppercase tracking-wider text-[#735c00] border-b border-[#c3c8c1]">
+              <th class="py-3 pr-4 font-bold">Tome</th>
+              <th class="py-3 pr-4 font-bold">Author</th>
+              <th class="py-3 pr-4 font-bold">Genre</th>
+              <th class="py-3 pr-4 font-bold">Stock</th>
+              <th class="py-3 pr-4 font-bold">Status</th>
+              <th class="py-3 pr-4 font-bold text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="booksTbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Registers Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+      <!-- Authors Register -->
+      <section class="bg-[#f1e8cd]/40 p-6 md:p-8 rounded-lg border border-[#c3c8c1] flex flex-col h-full">
+        <div class="flex justify-between items-center mb-6">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[#735c00]">attribution</span>
+            <h2 class="font-serif text-xl text-[#061b0e] font-bold">Author registries</h2>
+          </div>
+          <button onclick="openAuthorModal()" class="text-xs text-[#a33b39] border border-[#a33b39] px-3 py-1 rounded hover:bg-[#a33b39] hover:text-[#fff9ed] transition-all font-bold uppercase tracking-wider">
+            Register Author
+          </button>
+        </div>
+
+        <div id="authorsList" class="space-y-4 flex-grow"></div>
+      </section>
+
+      <!-- Genres Register -->
+      <section class="bg-[#f1e8cd]/40 p-6 md:p-8 rounded-lg border border-[#c3c8c1] flex flex-col h-full">
+        <div class="flex justify-between items-center mb-6">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[#735c00]">category</span>
+            <h2 class="font-serif text-xl text-[#061b0e] font-bold">Genre Classifications</h2>
+          </div>
+          <button onclick="openGenreModal()" class="text-xs text-[#a33b39] border border-[#a33b39] px-3 py-1 rounded hover:bg-[#a33b39] hover:text-[#fff9ed] transition-all font-bold uppercase tracking-wider">
+            Define Genre
+          </button>
+        </div>
+
+        <div id="genresList" class="space-y-4 flex-grow"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-[#ebe2c8] border-t border-[#737973]/30 py-8 px-6 mt-12">
+    <div class="max-w-[1200px] mx-auto text-center flex flex-col items-center gap-4">
+      <span class="font-serif text-base italic text-[#061b0e] font-semibold">© 1892 पुस्तकालय Magical Library</span>
+      <p class="text-[10px] text-[#434843]/60 italic">
+        Preserved under royal seal and managed by the Order of Archivists.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Author Modal -->
+  <div id="authorModal" class="hidden fixed inset-0 z-[90] flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-[#061b0e]/60" onclick="closeModal('authorModal')"></div>
+    <div class="relative bg-[#fff9ed] rounded-lg border border-[#c3c8c1] shadow-2xl p-6 md:p-8 w-full max-w-md max-h-[90vh] overflow-y-auto">
+      <div class="absolute top-4 left-4 w-6 h-6 border-t border-l border-[#061b0e]/20 rounded-tl"></div>
+      <div class="absolute top-4 right-4 w-6 h-6 border-t border-r border-[#061b0e]/20 rounded-tr"></div>
+      <h2 class="font-serif text-2xl text-[#061b0e] font-bold mb-1" id="authorModalTitle">Register Author</h2>
+      <p class="text-xs italic text-[#434843] mb-6">Inscribe a new scribe into the indices.</p>
+      <form id="authorForm" class="space-y-5" onsubmit="handleAuthorForm(event)">
+        <div class="space-y-1">
+          <label for="authorName" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Name</label>
+          <input id="authorName" type="text" class="w-full input-ledger text-base text-[#1f1c0b]" placeholder="e.g. Alistair Vane" />
+        </div>
+        <div class="space-y-1">
+          <label for="authorSpecialty" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Specialty</label>
+          <input id="authorSpecialty" type="text" class="w-full input-ledger text-base text-[#1f1c0b]" placeholder="e.g. Victorian Necromancy" />
+        </div>
+        <div class="space-y-1">
+          <label for="authorBio" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Biography</label>
+          <textarea id="authorBio" rows="4" class="w-full bg-[#fcf3d8]/50 border border-[#c3c8c1] rounded p-4 text-sm focus:outline-none focus:border-[#cba72f] text-[#1f1c0b] italic leading-relaxed" placeholder="Document the scribe's lore…"></textarea>
+        </div>
+        <div class="flex justify-end gap-3 pt-2">
+          <button type="button" onclick="closeModal('authorModal')" class="px-5 py-2 border border-[#c3c8c1] rounded text-xs uppercase tracking-widest font-bold text-[#434843] hover:bg-[#ebe2c8]/40 transition-colors">Cancel</button>
+          <button type="submit" class="px-6 py-2 bg-[#1b3022] hover:bg-[#061b0e] text-[#fff9ed] rounded text-xs uppercase tracking-widest font-bold shadow-md transition-colors">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Genre Modal -->
+  <div id="genreModal" class="hidden fixed inset-0 z-[90] flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-[#061b0e]/60" onclick="closeModal('genreModal')"></div>
+    <div class="relative bg-[#fff9ed] rounded-lg border border-[#c3c8c1] shadow-2xl p-6 md:p-8 w-full max-w-md max-h-[90vh] overflow-y-auto">
+      <div class="absolute top-4 left-4 w-6 h-6 border-t border-l border-[#061b0e]/20 rounded-tl"></div>
+      <div class="absolute top-4 right-4 w-6 h-6 border-t border-r border-[#061b0e]/20 rounded-tr"></div>
+      <h2 class="font-serif text-2xl text-[#061b0e] font-bold mb-1" id="genreModalTitle">Define Genre</h2>
+      <p class="text-xs italic text-[#434843] mb-6">Add a classification to the lexicon.</p>
+      <form id="genreForm" class="space-y-5" onsubmit="handleGenreForm(event)">
+        <div class="space-y-1">
+          <label for="genreName" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Name</label>
+          <input id="genreName" type="text" class="w-full input-ledger text-base text-[#1f1c0b]" placeholder="e.g. Arcane History" />
+        </div>
+        <div class="space-y-1">
+          <label for="genreShelf" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Shelf Location</label>
+          <input id="genreShelf" type="text" class="w-full input-ledger text-base text-[#1f1c0b]" placeholder="e.g. East Wing - G4" />
+        </div>
+        <div class="space-y-1">
+          <label for="genreDesc" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Description</label>
+          <textarea id="genreDesc" rows="4" class="w-full bg-[#fcf3d8]/50 border border-[#c3c8c1] rounded p-4 text-sm focus:outline-none focus:border-[#cba72f] text-[#1f1c0b] italic leading-relaxed" placeholder="Describe this classification…"></textarea>
+        </div>
+        <div class="flex justify-end gap-3 pt-2">
+          <button type="button" onclick="closeModal('genreModal')" class="px-5 py-2 border border-[#c3c8c1] rounded text-xs uppercase tracking-widest font-bold text-[#434843] hover:bg-[#ebe2c8]/40 transition-colors">Cancel</button>
+          <button type="submit" class="px-6 py-2 bg-[#1b3022] hover:bg-[#061b0e] text-[#fff9ed] rounded text-xs uppercase tracking-widest font-bold shadow-md transition-colors">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="./js/common.js"></script>
+  <script>
+    const P = window.Pustakalaya;
+
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+    function stockBadge(book) {
+      if (book.availableCopies <= 0) {
+        return '<span class="text-[10px] bg-[#fdf0ee] text-[#630a10] border border-[#a33b39]/40 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Loaned Out</span>';
+      }
+      if (book.isLowStock) {
+        return '<span class="text-[10px] bg-[#fcf3d8] text-[#735c00] border border-[#cba72f]/40 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Low Stock</span>';
+      }
+      return '<span class="text-[10px] bg-[#eef4ec] text-[#1b3022] border border-[#b4cdb8]/60 px-2 py-0.5 rounded font-bold uppercase tracking-wider">In Stock</span>';
+    }
+
+    function renderBooks(books) {
+      const tbody = document.getElementById('booksTbody');
+      if (!books.length) {
+        tbody.innerHTML = '<tr><td colspan="6" class="py-10 text-center italic text-[#434843]">No tomes recorded yet. Scribe the first one above.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = books.map((b) =>
+        '<tr class="border-b border-dotted border-[#737973]/40">' +
+          '<td class="py-4 pr-4">' +
+            '<div class="flex items-center gap-3">' +
+              '<div class="w-8 h-10 rounded bg-[#1b3022] shrink-0 flex items-center justify-center overflow-hidden">' +
+                '<span class="material-symbols-outlined text-[#ffe088] text-sm">auto_stories</span>' +
+              '</div>' +
+              '<div class="min-w-0">' +
+                '<p class="font-serif font-semibold text-[#061b0e] truncate">' + P.escapeHtml(b.title) + '</p>' +
+                '<p class="text-[10px] text-[#434843]/70 italic">' + P.escapeHtml(b.archiveRef || 'no ref') + '</p>' +
+              '</div>' +
+            '</div>' +
+          '</td>' +
+          '<td class="py-4 pr-4 italic text-[#434843] text-sm">' + P.escapeHtml(b.author) + '</td>' +
+          '<td class="py-4 pr-4"><span class="text-[10px] bg-[#f7eed2] px-2 py-0.5 rounded text-[#735c00] border border-[#cba72f]/30 font-semibold uppercase">' + P.escapeHtml(b.genre) + '</span></td>' +
+          '<td class="py-4 pr-4 text-sm">' + b.availableCopies + ' <span class="text-[#434843]/60">/ ' + b.totalCopies + '</span></td>' +
+          '<td class="py-4 pr-4">' + stockBadge(b) + '</td>' +
+          '<td class="py-4 pr-4 text-right whitespace-nowrap">' +
+            '<a href="./intake.html?id=' + b.id + '" class="text-[#735c00] hover:text-[#061b0e] text-xs font-bold uppercase tracking-wider mr-3 inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">edit</span>Amend</a>' +
+            '<button onclick="deleteBook(' + b.id + ', this)" class="text-[#a33b39] hover:text-[#630a10] text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">delete</span><span>Delete</span></button>' +
+          '</td>' +
+        '</tr>'
+      ).join('');
+    }
+
+    function renderLowStock(books) {
+      const list = document.getElementById('lowStockList');
+      document.getElementById('lowStockCountBadge').textContent = books.length;
+      if (!books.length) {
+        list.innerHTML = '<div class="col-span-full bg-[#eef4ec] border border-[#b4cdb8]/60 rounded-lg p-6 text-center">' +
+          '<span class="material-symbols-outlined text-[#1b3022] text-3xl">verified</span>' +
+          '<p class="text-sm italic text-[#434843] mt-2">All tomes are comfortably in stock. No alerts.</p>' +
+        '</div>';
+        return;
+      }
+      list.innerHTML = books.map((b) =>
+        '<div class="bg-[#fdf0ee] border border-[#a33b39]/30 rounded-lg p-5 relative overflow-hidden">' +
+          '<div class="flex items-start justify-between gap-3">' +
+            '<div class="min-w-0">' +
+              '<p class="font-serif text-base text-[#061b0e] font-bold leading-tight">' + P.escapeHtml(b.title) + '</p>' +
+              '<p class="text-xs text-[#434843] italic mt-0.5">' + P.escapeHtml(b.author) + '</p>' +
+            '</div>' +
+            '<span class="material-symbols-outlined text-[#a33b39] shrink-0">warning</span>' +
+          '</div>' +
+          '<div class="mt-3 flex flex-wrap items-center gap-2">' +
+            '<span class="text-[10px] bg-[#fff9ed] text-[#630a10] border border-[#a33b39]/30 px-2 py-0.5 rounded font-bold uppercase tracking-wider">' + b.availableCopies + ' of ' + b.totalCopies + ' left</span>' +
+            '<span class="text-[10px] text-[#630a10]/80 italic">Threshold: ' + b.lowStockThreshold + '</span>' +
+            '<a href="./details.html?id=' + b.id + '" class="ml-auto text-[10px] text-[#a33b39] font-bold uppercase tracking-wider hover:text-[#630a10]">View Tome</a>' +
+          '</div>' +
+        '</div>'
+      ).join('');
+    }
+
+    function renderAuthors(authors) {
+      const list = document.getElementById('authorsList');
+      if (!authors.length) {
+        list.innerHTML = '<p class="text-xs italic text-[#434843] py-4">No authors registered yet.</p>';
+        return;
+      }
+      list.innerHTML = authors.map((a) =>
+        '<div class="ledger-row pb-4">' +
+          '<div class="flex justify-between items-start mb-2">' +
+            '<div class="min-w-0">' +
+              '<h3 class="font-serif text-base text-[#061b0e] font-semibold">' + P.escapeHtml(a.name) + '</h3>' +
+              '<p class="text-xs text-[#735c00] italic">Specialty: ' + P.escapeHtml(a.specialty || 'Unrecorded') + '</p>' +
+            '</div>' +
+            '<div class="flex items-center gap-2 shrink-0">' +
+              '<span class="text-[10px] text-[#434843]/60 uppercase font-bold tracking-widest font-mono">#A-' + a.id + '</span>' +
+              '<button onclick="openAuthorModal(' + a.id + ')" class="text-[#735c00] hover:text-[#061b0e]" aria-label="Edit author"><span class="material-symbols-outlined text-sm">edit</span></button>' +
+              '<button onclick="deleteAuthor(' + a.id + ', this)" class="text-[#a33b39] hover:text-[#630a10]" aria-label="Delete author"><span class="material-symbols-outlined text-sm">delete</span></button>' +
+            '</div>' +
+          '</div>' +
+          (a.bio ? '<p class="text-xs text-[#434843] leading-relaxed">' + P.escapeHtml(a.bio) + '</p>' : '') +
+          '<p class="text-[10px] text-[#a33b39] font-bold uppercase tracking-wider mt-2">' + a.bookCount + ' Scribed Work' + (a.bookCount === 1 ? '' : 's') + '</p>' +
+        '</div>'
+      ).join('');
+    }
+
+    function renderGenres(genres) {
+      const list = document.getElementById('genresList');
+      if (!genres.length) {
+        list.innerHTML = '<p class="text-xs italic text-[#434843] py-4">No genres defined yet.</p>';
+        return;
+      }
+      list.innerHTML = genres.map((g) =>
+        '<div class="ledger-row pb-4">' +
+          '<div class="flex justify-between items-start mb-2">' +
+            '<div class="min-w-0">' +
+              '<h3 class="font-serif text-base text-[#061b0e] font-semibold">' + P.escapeHtml(g.name) + '</h3>' +
+              (g.description ? '<p class="text-xs text-[#434843] mt-1 italic">' + P.escapeHtml(g.description) + '</p>' : '') +
+            '</div>' +
+            '<div class="flex items-center gap-2 shrink-0">' +
+              (g.shelfLocation
+                ? '<span class="text-xs bg-[#1b3022] text-[#fff9ed] px-3 py-1 rounded border border-[#b4cdb8] font-bold">' + P.escapeHtml(g.shelfLocation) + '</span>'
+                : '') +
+              '<button onclick="openGenreModal(' + g.id + ')" class="text-[#735c00] hover:text-[#061b0e]" aria-label="Edit genre"><span class="material-symbols-outlined text-sm">edit</span></button>' +
+              '<button onclick="deleteGenre(' + g.id + ', this)" class="text-[#a33b39] hover:text-[#630a10]" aria-label="Delete genre"><span class="material-symbols-outlined text-sm">delete</span></button>' +
+            '</div>' +
+          '</div>' +
+        '</div>'
+      ).join('');
+    }
+
+    async function refreshAll() {
+      try {
+        const [stats, books, lowStock, authors, genres] = await Promise.all([
+          P.request('/books/stats'),
+          P.request('/books'),
+          P.request('/books/low-stock'),
+          P.request('/authors'),
+          P.request('/genres'),
+        ]);
+        document.getElementById('statBooks').textContent = stats.totalBooks;
+        document.getElementById('statCopies').textContent = stats.cumulativeCopies + ' Cumulative Volumes';
+        document.getElementById('statAuthors').textContent = stats.totalAuthors;
+        document.getElementById('statGenres').textContent = stats.totalGenres;
+        document.getElementById('statLowStock').textContent = stats.lowStockCount;
+        renderBooks(books.data);
+        renderLowStock(lowStock.data);
+        renderAuthors(authors.data);
+        renderGenres(genres.data);
+      } catch (e) {
+        if (e.status === 401) {
+          window.location.href = './login.html';
+          return;
+        }
+        P.toast('The registers could not be summoned.', 'error');
+      }
+    }
+
+    // ── Author modal ──────────────────────────────────────────────────────
+    function openAuthorModal(id) {
+      const form = document.getElementById('authorForm');
+      P.clearFormErrors(form);
+      form.dataset.editingId = id || '';
+      document.getElementById('authorModalTitle').textContent = id ? 'Amend Author' : 'Register Author';
+      document.getElementById('authorName').value = '';
+      document.getElementById('authorSpecialty').value = '';
+      document.getElementById('authorBio').value = '';
+      openModal('authorModal');
+      if (id) {
+        P.request('/authors/' + id).then((a) => {
+          document.getElementById('authorName').value = a.name || '';
+          document.getElementById('authorSpecialty').value = a.specialty || '';
+          document.getElementById('authorBio').value = a.bio || '';
+        });
+      }
+    }
+
+    async function handleAuthorForm(e) {
+      e.preventDefault();
+      const form = document.getElementById('authorForm');
+      P.clearFormErrors(form);
+      const id = form.dataset.editingId;
+      const payload = {
+        name: document.getElementById('authorName').value.trim(),
+        specialty: document.getElementById('authorSpecialty').value.trim(),
+        bio: document.getElementById('authorBio').value.trim(),
+      };
+      if (!payload.name) {
+        P.setFieldError(document.getElementById('authorName'), 'Name is required.');
+        return;
+      }
+      try {
+        if (id) {
+          await P.request('/authors/' + id, { method: 'PUT', body: JSON.stringify(payload) });
+          P.toast('Author registry amended.', 'success');
+        } else {
+          await P.request('/authors', { method: 'POST', body: JSON.stringify(payload) });
+          P.toast('Author registered in the indices!', 'success');
+        }
+        closeModal('authorModal');
+        refreshAll();
+      } catch (err) {
+        if (err.status === 400 && err.body && err.body.errors) {
+          P.applyFieldErrors(form, err.body.errors, { name: '#authorName', specialty: '#authorSpecialty', bio: '#authorBio' });
+        } else if (err.status === 401) {
+          window.location.href = './login.html';
+        } else {
+          P.toast('The registry could not be updated.', 'error');
+        }
+      }
+    }
+
+    function deleteAuthor(id, btn) {
+      P.request('/authors/' + id, { method: 'DELETE' })
+        .then(() => {
+          P.toast('Author removed from the indices.', 'success');
+          refreshAll();
+        })
+        .catch((err) => {
+          if (err.status === 400 && err.body && err.body.errors && err.body.errors[0]) {
+            P.toast(err.body.errors[0].message, 'error');
+          } else if (err.status === 401) {
+            window.location.href = './login.html';
+          } else {
+            P.toast('Could not remove the author.', 'error');
+          }
+        });
+    }
+
+    // ── Genre modal ───────────────────────────────────────────────────────
+    function openGenreModal(id) {
+      const form = document.getElementById('genreForm');
+      P.clearFormErrors(form);
+      form.dataset.editingId = id || '';
+      document.getElementById('genreModalTitle').textContent = id ? 'Amend Genre' : 'Define Genre';
+      document.getElementById('genreName').value = '';
+      document.getElementById('genreShelf').value = '';
+      document.getElementById('genreDesc').value = '';
+      openModal('genreModal');
+      if (id) {
+        P.request('/genres/' + id).then((g) => {
+          document.getElementById('genreName').value = g.name || '';
+          document.getElementById('genreShelf').value = g.shelfLocation || '';
+          document.getElementById('genreDesc').value = g.description || '';
+        });
+      }
+    }
+
+    async function handleGenreForm(e) {
+      e.preventDefault();
+      const form = document.getElementById('genreForm');
+      P.clearFormErrors(form);
+      const id = form.dataset.editingId;
+      const payload = {
+        name: document.getElementById('genreName').value.trim(),
+        shelfLocation: document.getElementById('genreShelf').value.trim(),
+        description: document.getElementById('genreDesc').value.trim(),
+      };
+      if (!payload.name) {
+        P.setFieldError(document.getElementById('genreName'), 'Name is required.');
+        return;
+      }
+      try {
+        if (id) {
+          await P.request('/genres/' + id, { method: 'PUT', body: JSON.stringify(payload) });
+          P.toast('Genre classification amended.', 'success');
+        } else {
+          await P.request('/genres', { method: 'POST', body: JSON.stringify(payload) });
+          P.toast('Genre defined in the lexicon!', 'success');
+        }
+        closeModal('genreModal');
+        refreshAll();
+      } catch (err) {
+        if (err.status === 400 && err.body && err.body.errors) {
+          P.applyFieldErrors(form, err.body.errors, { name: '#genreName', shelfLocation: '#genreShelf', description: '#genreDesc' });
+        } else if (err.status === 401) {
+          window.location.href = './login.html';
+        } else {
+          P.toast('The lexicon could not be updated.', 'error');
+        }
+      }
+    }
+
+    function deleteGenre(id, btn) {
+      P.request('/genres/' + id, { method: 'DELETE' })
+        .then(() => {
+          P.toast('Genre removed from the lexicon.', 'success');
+          refreshAll();
+        })
+        .catch((err) => {
+          if (err.status === 400 && err.body && err.body.errors && err.body.errors[0]) {
+            P.toast(err.body.errors[0].message, 'error');
+          } else if (err.status === 401) {
+            window.location.href = './login.html';
+          } else {
+            P.toast('Could not remove the genre.', 'error');
+          }
+        });
+    }
+
+    // ── Books ─────────────────────────────────────────────────────────────
+    function deleteBook(id, btn) {
+      if (btn.dataset.confirm !== 'true') {
+        btn.dataset.confirm = 'true';
+        btn.querySelector('span:last-child').textContent = 'Confirm?';
+        btn.classList.add('text-[#630a10]');
+        clearTimeout(Number(btn.dataset.timer) || 0);
+        btn.dataset.timer = String(setTimeout(() => {
+          btn.dataset.confirm = 'false';
+          btn.querySelector('span:last-child').textContent = 'Delete';
+          btn.classList.remove('text-[#630a10]');
+        }, 3000));
+        return;
+      }
+      P.request('/books/' + id, { method: 'DELETE' })
+        .then(() => {
+          P.toast('Tome removed from the archives.', 'success');
+          refreshAll();
+        })
+        .catch((err) => {
+          if (err.status === 401) {
+            window.location.href = './login.html';
+          } else {
+            P.toast('Could not remove the tome.', 'error');
+          }
+        });
+    }
+
+    // ── Init ──────────────────────────────────────────────────────────────
+    async function init() {
+      const user = await P.requireAuth();
+      if (!user) return;
+      document.getElementById('archivistName').textContent = user.name;
+      refreshAll();
+    }
+
+    init();
+  </script>
+</body>
+</html>

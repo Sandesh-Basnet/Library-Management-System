@@ -74,6 +74,24 @@ body {
   box-shadow: 0 4px 12px -6px var(--color-tertiary-fixed);
 }
 
+/* Validation states — tint the ledger line and show field-specific text */
+.input-error {
+  border-bottom-color: var(--color-secondary) !important;
+}
+
+.input-error:focus {
+  border-bottom-color: var(--color-secondary) !important;
+  box-shadow: 0 4px 12px -6px rgba(163, 59, 57, 0.4);
+}
+
+.field-error {
+  color: var(--color-secondary);
+  font-size: 11px;
+  font-style: italic;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
 /* Wax Seal Style */
 .wax-seal {
   box-shadow: inset 2px 2px 5px rgba(0,0,0,0.4), 2px 4px 10px rgba(0,0,0,0.3);

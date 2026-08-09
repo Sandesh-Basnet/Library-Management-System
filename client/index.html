@@ -48,11 +48,22 @@
       </div>
 
       <div class="flex items-center gap-4">
+        <!-- Mobile menu toggle -->
+        <button onclick="Pustakalaya.toggleMenu('mobileMenu')" class="md:hidden text-[#061b0e] p-1" aria-label="Toggle menu">
+          <span class="material-symbols-outlined text-2xl">menu</span>
+        </button>
         <!-- Click takes to login page -->
-        <a href="./login.html" class="bg-[#1b3022] text-[#fff9ed] px-5 py-2 rounded border border-[#b4cdb8] text-xs uppercase tracking-widest font-bold hover:scale-95 transition-transform duration-300">
+        <a href="./login.html" class="hidden md:inline-block bg-[#1b3022] text-[#fff9ed] px-5 py-2 rounded border border-[#b4cdb8] text-xs uppercase tracking-widest font-bold hover:scale-95 transition-transform duration-300">
           Admin Portal
         </a>
       </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-[#c3c8c1] bg-[#fcf3d8] px-6 py-4">
+      <a href="./index.html" class="block py-2 text-sm uppercase tracking-widest font-semibold text-[#a33b39]">Books</a>
+      <a href="./registers.html" class="block py-2 text-sm uppercase tracking-widest font-semibold text-[#434843] hover:text-[#061b0e]">Registers</a>
+      <a href="./login.html" class="block mt-2 bg-[#1b3022] text-[#fff9ed] text-center px-4 py-2 rounded text-xs uppercase tracking-widest font-bold">Admin Portal</a>
     </div>
   </nav>
 
@@ -81,7 +92,7 @@
         
         <!-- Search field -->
         <div class="md:col-span-6">
-          <label class="font-serif text-lg text-[#061b0e] italic mb-2 block font-semibold">
+          <label for="searchInput" class="font-serif text-lg text-[#061b0e] italic mb-2 block font-semibold">
             Search Catalog
           </label>
           <div class="flex items-center border-b border-[#737973] py-2 focus-within:border-[#a33b39] transition-colors duration-300">
@@ -90,6 +101,7 @@
               type="text"
               id="searchInput"
               placeholder="Title, author, or keyword..."
+              oninput="scheduleSearch()"
               class="w-full bg-transparent border-none outline-none focus:ring-0 text-base italic placeholder:text-[#737973]/60 text-[#1f1c0b]"
             />
           </div>
@@ -97,26 +109,17 @@
 
         <!-- Genre Filter -->
         <div class="md:col-span-4">
-          <label class="font-serif text-lg text-[#061b0e] italic mb-2 block font-semibold">
+          <label for="genreSelect" class="font-serif text-lg text-[#061b0e] italic mb-2 block font-semibold">
             Browse Genre
           </label>
           <div class="flex items-center border-b border-[#737973] py-2 focus-within:border-[#a33b39] transition-colors duration-300">
             <span class="material-symbols-outlined text-[#737973] mr-3">filter_list</span>
             <select 
               id="genreSelect"
+              onchange="loadBooks()"
               class="w-full bg-transparent border-none outline-none focus:ring-0 text-base text-[#1f1c0b] appearance-none cursor-pointer"
             >
-              <option value="All Archives">All Archives</option>
-              <option value="Esoteric Geography">Esoteric Geography</option>
-              <option value="Fantasy">Fantasy</option>
-              <option value="Lore">Lore</option>
-              <option value="Science">Science</option>
-              <option value="Poetry">Poetry</option>
-              <option value="Mystery">Mystery</option>
-              <option value="Romance">Romance</option>
-              <option value="Arcane Arts">Arcane Arts</option>
-              <option value="Natural Science">Natural Science</option>
-              <option value="Dark Arts">Dark Arts</option>
+              <option value="">All Archives</option>
             </select>
           </div>
         </div>
@@ -136,89 +139,7 @@
 
   <!-- Book Catalog Grid -->
   <section class="px-6 max-w-[1200px] mx-auto w-full pb-24 flex-grow">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="catalogGrid">
-      
-      <!-- Book 1 -->
-      <div class="group cursor-pointer flex flex-col h-full bg-[#fff9ed] border border-[#061b0e]/10 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow" onclick="window.location.href='./details.html'">
-        <div class="parchment-card aspect-[3/4] rounded border border-[#061b0e]/20 relative overflow-hidden flex flex-col p-6 mb-4 shadow-sm">
-          <div class="book-spine"></div>
-          <div class="flex-grow flex flex-col items-center justify-center text-center border border-[#061b0e]/15 p-2 rounded-sm h-full relative">
-            <span class="text-[10px] uppercase tracking-[0.25em] text-[#a33b39] font-bold block mb-2">CL-1892-BX</span>
-            <h3 class="font-serif text-base md:text-lg text-[#061b0e] leading-tight font-bold mb-2">The Cartography of Whispers</h3>
-            <div class="w-10 h-[1px] bg-[#061b0e]/35 my-2"></div>
-            <p class="text-xs text-[#434843] italic">Alistair Vane, High Archivist</p>
-          </div>
-        </div>
-        <div class="mt-auto pt-2 flex justify-between items-start gap-2">
-          <div>
-            <h4 class="font-serif text-base text-[#061b0e] font-bold">The Cartography of Whispers</h4>
-            <p class="text-xs text-[#434843] italic">Alistair Vane, High Archivist</p>
-          </div>
-          <span class="text-[10px] bg-[#f7eed2] px-2 py-0.5 rounded text-[#735c00] border border-[#cba72f]/30 font-semibold uppercase shrink-0">Geography</span>
-        </div>
-      </div>
-
-      <!-- Book 2 -->
-      <div class="group cursor-pointer flex flex-col h-full bg-[#fff9ed] border border-[#061b0e]/10 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow" onclick="window.location.href='./details.html'">
-        <div class="parchment-card aspect-[3/4] rounded border border-[#061b0e]/20 relative overflow-hidden flex flex-col p-6 mb-4 shadow-sm" style="transform: rotate(0.6deg);">
-          <div class="book-spine"></div>
-          <div class="flex-grow flex flex-col items-center justify-center text-center border border-[#061b0e]/15 p-2 rounded-sm h-full relative">
-            <span class="text-[10px] uppercase tracking-[0.25em] text-[#a33b39] font-bold block mb-2">CL-1842-EM</span>
-            <h3 class="font-serif text-base md:text-lg text-[#061b0e] leading-tight font-bold mb-2">The Emerald Lexicon</h3>
-            <div class="w-10 h-[1px] bg-[#061b0e]/35 my-2"></div>
-            <p class="text-xs text-[#434843] italic">Sylas Vane</p>
-          </div>
-        </div>
-        <div class="mt-auto pt-2 flex justify-between items-start gap-2">
-          <div>
-            <h4 class="font-serif text-base text-[#061b0e] font-bold">The Emerald Lexicon</h4>
-            <p class="text-xs text-[#434843] italic">Sylas Vane</p>
-          </div>
-          <span class="text-[10px] bg-[#f7eed2] px-2 py-0.5 rounded text-[#735c00] border border-[#cba72f]/30 font-semibold uppercase shrink-0">Fantasy</span>
-        </div>
-      </div>
-
-      <!-- Book 3 -->
-      <div class="group cursor-pointer flex flex-col h-full bg-[#fff9ed] border border-[#061b0e]/10 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow" onclick="window.location.href='./details.html'">
-        <div class="parchment-card aspect-[3/4] rounded border border-[#061b0e]/20 relative overflow-hidden flex flex-col p-6 mb-4 shadow-sm" style="transform: rotate(-0.5deg);">
-          <div class="book-spine"></div>
-          <div class="flex-grow flex flex-col items-center justify-center text-center border border-[#061b0e]/15 p-2 rounded-sm h-full relative">
-            <span class="text-[10px] uppercase tracking-[0.25em] text-[#a33b39] font-bold block mb-2">CL-1899-SH</span>
-            <h3 class="font-serif text-base md:text-lg text-[#061b0e] leading-tight font-bold mb-2">Shadows of the Shire</h3>
-            <div class="w-10 h-[1px] bg-[#061b0e]/35 my-2"></div>
-            <p class="text-xs text-[#434843] italic">Eleanor Thorne</p>
-          </div>
-        </div>
-        <div class="mt-auto pt-2 flex justify-between items-start gap-2">
-          <div>
-            <h4 class="font-serif text-base text-[#061b0e] font-bold">Shadows of the Shire</h4>
-            <p class="text-xs text-[#434843] italic">Eleanor Thorne</p>
-          </div>
-          <span class="text-[10px] bg-[#f7eed2] px-2 py-0.5 rounded text-[#735c00] border border-[#cba72f]/30 font-semibold uppercase shrink-0">Lore</span>
-        </div>
-      </div>
-
-      <!-- Book 4 -->
-      <div class="group cursor-pointer flex flex-col h-full bg-[#fff9ed] border border-[#061b0e]/10 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow" onclick="window.location.href='./details.html'">
-        <div class="parchment-card aspect-[3/4] rounded border border-[#061b0e]/20 relative overflow-hidden flex flex-col p-6 mb-4 shadow-sm" style="transform: rotate(0.2deg);">
-          <div class="book-spine"></div>
-          <div class="flex-grow flex flex-col items-center justify-center text-center border border-[#061b0e]/15 p-2 rounded-sm h-full relative">
-            <span class="text-[10px] uppercase tracking-[0.25em] text-[#a33b39] font-bold block mb-2">CL-1902-CM</span>
-            <h3 class="font-serif text-base md:text-lg text-[#061b0e] leading-tight font-bold mb-2">Celestial Mechanics</h3>
-            <div class="w-10 h-[1px] bg-[#061b0e]/35 my-2"></div>
-            <p class="text-xs text-[#434843] italic">Dr. Alistair Moone</p>
-          </div>
-        </div>
-        <div class="mt-auto pt-2 flex justify-between items-start gap-2">
-          <div>
-            <h4 class="font-serif text-base text-[#061b0e] font-bold">Celestial Mechanics</h4>
-            <p class="text-xs text-[#434843] italic">Dr. Alistair Moone</p>
-          </div>
-          <span class="text-[10px] bg-[#f7eed2] px-2 py-0.5 rounded text-[#735c00] border border-[#cba72f]/30 font-semibold uppercase shrink-0">Science</span>
-        </div>
-      </div>
-
-    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="catalogGrid"></div>
   </section>
 
   <!-- Correspondence Section -->
@@ -237,7 +158,7 @@
 
       <div class="space-y-6">
         <div class="space-y-2">
-          <label class="font-serif text-xl text-[#061b0e] italic font-semibold">Your Correspondence Address</label>
+          <label for="newsletterEmail" class="font-serif text-xl text-[#061b0e] italic font-semibold">Your Correspondence Address</label>
           <div class="border-b border-[#737973] py-2">
             <input 
               type="email"
@@ -281,22 +202,102 @@
     </div>
   </footer>
 
+  <script src="./js/common.js"></script>
   <script>
+    const P = window.Pustakalaya;
+
+    async function loadGenres() {
+      try {
+        const { data } = await P.request('/genres');
+        const select = document.getElementById('genreSelect');
+        select.innerHTML = '<option value="">All Archives</option>' + data
+          .map((g) => '<option value="' + g.id + '">' + P.escapeHtml(g.name) + '</option>')
+          .join('');
+      } catch (e) {
+        P.toast('The genre register could not be summoned.', 'error');
+      }
+    }
+
+    function bookCard(b) {
+      const inner = b.coverImageUrl
+        ? '<img src="' + P.escapeHtml(b.coverImageUrl) + '" alt="' + P.escapeHtml(b.title) + '" class="w-full h-full object-cover" />'
+        : '<div class="flex-grow flex flex-col items-center justify-center text-center border border-[#061b0e]/15 p-2 rounded-sm h-full relative">' +
+            '<span class="text-[10px] uppercase tracking-[0.25em] text-[#a33b39] font-bold block mb-2">' + P.escapeHtml(b.archiveRef || 'PUSTAKALAYA') + '</span>' +
+            '<h3 class="font-serif text-base md:text-lg text-[#061b0e] leading-tight font-bold mb-2">' + P.escapeHtml(b.title) + '</h3>' +
+            '<div class="w-10 h-[1px] bg-[#061b0e]/35 my-2"></div>' +
+            '<p class="text-xs text-[#434843] italic">' + P.escapeHtml(b.author) + '</p>' +
+          '</div>';
+
+      return '<div class="group cursor-pointer flex flex-col h-full bg-[#fff9ed] border border-[#061b0e]/10 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow" onclick="window.location.href=\'./details.html?id=' + b.id + '\'">' +
+        '<div class="parchment-card aspect-[3/4] rounded border border-[#061b0e]/20 relative overflow-hidden flex flex-col p-6 mb-4 shadow-sm">' +
+          '<div class="book-spine"></div>' +
+          inner +
+        '</div>' +
+        '<div class="mt-auto pt-2 flex justify-between items-start gap-2">' +
+          '<div>' +
+            '<h4 class="font-serif text-base text-[#061b0e] font-bold">' + P.escapeHtml(b.title) + '</h4>' +
+            '<p class="text-xs text-[#434843] italic">' + P.escapeHtml(b.author) + '</p>' +
+          '</div>' +
+          '<span class="text-[10px] bg-[#f7eed2] px-2 py-0.5 rounded text-[#735c00] border border-[#cba72f]/30 font-semibold uppercase shrink-0">' + P.escapeHtml(b.genre) + '</span>' +
+        '</div>' +
+      '</div>';
+    }
+
+    async function loadBooks() {
+      const grid = document.getElementById('catalogGrid');
+      grid.innerHTML = '<div class="col-span-full text-center py-16 italic text-[#434843] text-sm flex items-center justify-center gap-2">' +
+        '<span class="material-symbols-outlined animate-spin">autorenew</span> Summoning the tomes from the archives…</div>';
+
+      const search = document.getElementById('searchInput').value.trim();
+      const genreId = document.getElementById('genreSelect').value;
+      const params = new URLSearchParams();
+      if (search) params.set('search', search);
+      if (genreId) params.set('genreId', genreId);
+
+      try {
+        const { data } = await P.request('/books?' + params.toString());
+        if (!data.length) {
+          grid.innerHTML = '<div class="col-span-full text-center py-16">' +
+            '<p class="font-serif text-lg text-[#061b0e] italic">No tomes match your query.</p>' +
+            '<p class="text-xs text-[#434843] italic mt-1">Pray, loosen the search and try again.</p>' +
+          '</div>';
+          return;
+        }
+        grid.innerHTML = data.map(bookCard).join('');
+      } catch (e) {
+        grid.innerHTML = '<div class="col-span-full text-center py-16">' +
+          '<p class="font-serif text-lg text-[#a33b39] italic">The archive shelves could not be reached.</p>' +
+          '<button onclick="loadBooks()" class="mt-4 bg-[#1b3022] text-[#fff9ed] px-5 py-2 rounded text-xs uppercase tracking-widest font-bold">Retry</button>' +
+        '</div>';
+      }
+    }
+
+    let searchTimer = null;
+    function scheduleSearch() {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(loadBooks, 300);
+    }
+
     function clearFilters() {
       document.getElementById('searchInput').value = '';
-      document.getElementById('genreSelect').value = 'All Archives';
-      alert('Filters cleared!');
+      document.getElementById('genreSelect').value = '';
+      loadBooks();
     }
 
     function subscribeNewsletter() {
-      const email = document.getElementById('newsletterEmail').value;
-      if (!email) {
-        alert('Pray, enter your correspondence address first.');
+      const input = document.getElementById('newsletterEmail');
+      const email = input.value.trim();
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        P.setFieldError(input, 'Pray, enter a valid correspondence address.');
         return;
       }
-      alert('Parchment letter sealed! Your mailer will arrive on the next lunar cycle.');
-      document.getElementById('newsletterEmail').value = '';
+      P.clearFieldError(input);
+      P.toast('Parchment letter sealed! Your mailer will arrive on the next lunar cycle.', 'success');
+      input.value = '';
     }
+
+    loadGenres();
+    loadBooks();
   </script>
 </body>
 </html>

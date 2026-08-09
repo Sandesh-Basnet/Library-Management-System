@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Details | पुस्तकालय</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts & Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Literata:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="./style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Literata', 'serif'],
+            serif: ['EB Garamond', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#fff9ed] text-[#1f1c0b] font-sans min-h-screen flex flex-col relative">
+
+  <!-- Parchment texture overlay -->
+  <div class="fixed inset-0 pointer-events-none opacity-[0.03] parchment-texture mix-blend-multiply z-0"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="border-b border-[#c3c8c1] bg-[#fcf3d8]/90 backdrop-blur sticky top-0 z-50">
+    <div class="flex justify-between items-center px-6 md:px-10 py-4 max-w-[1200px] mx-auto w-full">
+      <div class="flex items-center gap-4 cursor-pointer" onclick="window.location.href='./index.html'">
+        <div class="w-10 h-10 rounded-full bg-[#061b0e] flex items-center justify-center text-white overflow-hidden border border-[#b4cdb8]">
+          <span class="material-symbols-outlined text-[#ffe088]">auto_stories</span>
+        </div>
+        <span class="font-serif text-xl italic font-bold text-[#061b0e]">पुस्तकालय</span>
+      </div>
+      
+      <div class="hidden md:flex items-center gap-8 text-sm uppercase tracking-widest font-semibold">
+        <a href="./index.html" class="text-[#a33b39] border-b-2 border-[#a33b39] pb-1">Books</a>
+        <a href="./registers.html" class="text-[#434843] hover:text-[#061b0e] transition-colors">Registers</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="Pustakalaya.toggleMenu('mobileMenu')" class="md:hidden text-[#061b0e] p-1" aria-label="Toggle menu">
+          <span class="material-symbols-outlined text-2xl">menu</span>
+        </button>
+        <a href="./login.html" class="hidden md:inline-block bg-[#1b3022] text-[#fff9ed] px-5 py-2 rounded text-xs uppercase tracking-widest font-bold">
+          Admin Portal
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-[#c3c8c1] bg-[#fcf3d8] px-6 py-4">
+      <a href="./index.html" class="block py-2 text-sm uppercase tracking-widest font-semibold text-[#a33b39]">Books</a>
+      <a href="./registers.html" class="block py-2 text-sm uppercase tracking-widest font-semibold text-[#434843] hover:text-[#061b0e]">Registers</a>
+      <a href="./login.html" class="block mt-2 bg-[#1b3022] text-[#fff9ed] text-center px-4 py-2 rounded text-xs uppercase tracking-widest font-bold">Admin Portal</a>
+    </div>
+  </nav>
+
+  <!-- Return Back Button -->
+  <div class="max-w-[1200px] mx-auto w-full px-6 md:px-10 pt-10">
+    <a href="./index.html" class="inline-flex items-center gap-2 text-[#434843] hover:text-[#061b0e] transition-colors group text-xs uppercase tracking-widest font-bold">
+      <span class="material-symbols-outlined transition-transform group-hover:-translate-x-1">arrow_back</span>
+      Return to Catalog
+    </a>
+  </div>
+
+  <!-- Main Details Grid Layout -->
+  <main class="max-w-[1200px] mx-auto w-full px-6 md:px-10 py-10 flex-grow" id="bookMain">
+    <div class="text-center py-24 italic text-[#434843] text-sm flex items-center justify-center gap-2">
+      <span class="material-symbols-outlined animate-spin">autorenew</span> Unfurling the scroll…
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-[#ebe2c8] border-t border-[#737973]/30 py-8 px-6 mt-12">
+    <div class="max-w-[1200px] mx-auto text-center flex flex-col items-center gap-4">
+      <span class="font-serif text-base italic text-[#061b0e] font-semibold">© 1892 पुस्तकालय Magical Library</span>
+      <p class="text-[10px] text-[#434843]/60 italic">
+        Preserved under royal seal and managed by the Order of Archivists.
+      </p>
+    </div>
+  </footer>
+
+  <script src="./js/common.js"></script>
+  <script>
+    const P = window.Pustakalaya;
+
+    function statusHtml(book) {
+      if (book.availableCopies <= 0) {
+        return '<div class="flex items-center gap-2">' +
+          '<div class="w-2 h-2 rounded-full bg-[#a33b39]"></div>' +
+          '<p class="text-sm text-[#061b0e] italic font-semibold">All Volumes Loaned Out</p></div>';
+      }
+      if (book.isLowStock) {
+        return '<div class="flex items-center gap-2">' +
+          '<div class="w-2 h-2 rounded-full bg-[#cba72f] animate-pulse"></div>' +
+          '<p class="text-sm text-[#061b0e] italic font-semibold">Low Stock — ' + book.availableCopies + ' of ' + book.totalCopies + ' in Stack</p></div>';
+      }
+      return '<div class="flex items-center gap-2">' +
+        '<div class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></div>' +
+        '<p class="text-sm text-[#061b0e] italic font-semibold">' + book.availableCopies + ' Volumes in Stack</p></div>';
+    }
+
+    function coverHtml(book) {
+      if (book.coverImageUrl) {
+        return '<img src="' + P.escapeHtml(book.coverImageUrl) + '" alt="Cover of ' + P.escapeHtml(book.title) + '" class="w-full h-full object-cover opacity-90 mix-blend-multiply" />';
+      }
+      return '<div class="w-full h-full flex flex-col items-center justify-center text-center p-8">' +
+        '<span class="text-[11px] tracking-[0.25em] text-[#ffe088] uppercase font-bold mb-4">' + P.escapeHtml(book.archiveRef || 'PUSTAKALAYA') + '</span>' +
+        '<h2 class="font-serif text-xl md:text-2xl text-[#fcf3d8] leading-tight font-bold">' + P.escapeHtml(book.title) + '</h2>' +
+        '<div class="w-10 h-[1px] bg-[#b4cdb8]/50 my-4"></div>' +
+        '<p class="text-xs text-[#819986] italic">' + P.escapeHtml(book.author) + '</p>' +
+      '</div>';
+    }
+
+    function renderBook(book) {
+      document.title = book.title + ' | पुस्तकालय';
+      const main = document.getElementById('bookMain');
+      main.innerHTML =
+        '<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">' +
+          '<div class="lg:col-span-5 flex justify-center">' +
+            '<div class="relative group w-full max-w-sm">' +
+              '<div class="aspect-[2/3] w-full bg-[#1b3022] rounded-r-lg overflow-hidden relative shadow-2xl parchment-texture border border-[#061b0e]/20">' +
+                coverHtml(book) +
+                '<div class="absolute bottom-8 left-0 right-0 flex justify-center z-10">' +
+                  '<div class="bg-[#ebe2c8]/95 backdrop-blur px-4 py-2 border-y border-[#cba72f] shadow-sm">' +
+                    '<span class="text-[11px] tracking-[0.2em] text-[#4e3d00] uppercase font-bold">Archive Ref: ' + P.escapeHtml(book.archiveRef || '—') + '</span>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="lg:col-span-7 space-y-8">' +
+            '<header class="space-y-3">' +
+              '<div class="flex items-center gap-3 flex-wrap">' +
+                '<div class="wax-seal w-7 h-7 rounded-full border border-white/30 flex items-center justify-center">' +
+                  '<span class="material-symbols-outlined text-white text-[15px]">auto_stories</span>' +
+                '</div>' +
+                '<span class="text-xs uppercase tracking-[0.25em] text-[#a33b39] font-bold">Rare Collection</span>' +
+                (book.isLowStock
+                  ? '<span class="text-[10px] bg-[#fcf3d8] px-2 py-0.5 rounded text-[#a33b39] border border-[#a33b39]/40 font-bold uppercase tracking-wider">Low Stock</span>'
+                  : '') +
+              '</div>' +
+
+              '<h1 class="font-serif text-3xl md:text-4xl text-[#061b0e] leading-tight font-bold">' + P.escapeHtml(book.title) + '</h1>' +
+
+              '<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-b border-[#737973]/20 py-4">' +
+                '<div>' +
+                  '<p class="text-[11px] text-[#434843] uppercase tracking-wider">Author</p>' +
+                  '<p class="text-sm text-[#061b0e] italic font-semibold">' + P.escapeHtml(book.author) + '</p>' +
+                '</div>' +
+                '<div>' +
+                  '<p class="text-[11px] text-[#434843] uppercase tracking-wider">Genre</p>' +
+                  '<p class="text-sm text-[#061b0e] italic font-semibold">' + P.escapeHtml(book.genre) + '</p>' +
+                '</div>' +
+                '<div>' +
+                  '<p class="text-[11px] text-[#434843] uppercase tracking-wider">Status</p>' +
+                  statusHtml(book) +
+                '</div>' +
+              '</div>' +
+            '</header>' +
+
+            '<section class="space-y-4">' +
+              '<div class="flex items-center gap-3">' +
+                '<span class="material-symbols-outlined text-[#061b0e]">history_edu</span>' +
+                '<h2 class="font-serif text-xl text-[#061b0e] font-bold">History of this Tome</h2>' +
+              '</div>' +
+              '<div class="text-sm text-[#434843] leading-relaxed max-w-2xl text-justify whitespace-pre-wrap first-letter:text-4xl first-letter:font-bold first-letter:text-[#061b0e] first-letter:float-left first-letter:mr-2">' +
+                P.escapeHtml(book.description || 'No history has been recorded for this tome.') +
+              '</div>' +
+            '</section>' +
+
+            '<div class="flex flex-wrap gap-4 pt-4">' +
+              '<button onclick="requestReadingRoom()" class="px-6 py-3 bg-[#630a10] text-[#fff9ed] text-xs uppercase tracking-widest rounded shadow-md hover:scale-[0.98] transition-all duration-300 font-bold flex items-center gap-2 active:scale-95">' +
+                '<span class="material-symbols-outlined text-sm">bookmark</span> Request for Reading Room' +
+              '</button>' +
+              '<button onclick="shareLink()" class="px-6 py-3 border border-[#cba72f] bg-[#fcf3d8] text-[#1f1c0b] text-xs uppercase tracking-widest rounded hover:bg-[#f7eed2] transition-colors duration-300 font-bold flex items-center gap-2">' +
+                '<span class="material-symbols-outlined text-sm">share</span> Dispatch Catalog Link' +
+              '</button>' +
+            '</div>' +
+
+            '<div class="bg-[#f1e8cd] p-6 border border-[#c3c8c1] rounded-lg relative overflow-hidden group">' +
+              '<div class="absolute top-0 right-0 w-16 h-16 bg-[#735c00]/5 rotate-45 translate-x-8 -translate-y-8"></div>' +
+              '<div class="relative z-10 grid grid-cols-2 gap-4">' +
+                '<div>' +
+                  '<p class="text-[10px] text-[#434843] uppercase tracking-tighter mb-1">Catalog Number</p>' +
+                  '<p class="text-xs font-bold text-[#061b0e]">' + P.escapeHtml(book.archiveRef || '—') + '</p>' +
+                '</div>' +
+                '<div>' +
+                  '<p class="text-[10px] text-[#434843] uppercase tracking-tighter mb-1">Published / Last Loaned</p>' +
+                  '<p class="text-xs font-bold text-[#061b0e] italic">' + (book.publishedYear || '—') + '</p>' +
+                '</div>' +
+                '<div>' +
+                  '<p class="text-[10px] text-[#434843] uppercase tracking-tighter mb-1">Condition</p>' +
+                  '<p class="text-xs font-bold text-[#061b0e]">' + P.escapeHtml(book.conditionLevel || '—') + '</p>' +
+                '</div>' +
+                '<div>' +
+                  '<p class="text-[10px] text-[#434843] uppercase tracking-tighter mb-1">Restoration Log</p>' +
+                  '<p class="text-xs font-bold text-[#061b0e]">' + P.escapeHtml(book.restorationLog || '—') + '</p>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+      renderRelated(book);
+    }
+
+    async function renderRelated(book) {
+      const section = document.createElement('section');
+      section.className = 'mt-20 space-y-8';
+      let html = '<div class="text-center">' +
+        '<h3 class="font-serif text-2xl text-[#061b0e] font-bold">Similar Ancient Works</h3>' +
+        '<div class="w-16 h-[1.5px] bg-[#735c00] mx-auto mt-2"></div>' +
+      '</div><div class="grid grid-cols-1 md:grid-cols-3 gap-6">';
+
+      let related = [];
+      try {
+        const res = await P.request('/books/' + book.id + '/related');
+        related = res.data.slice(0, 2);
+      } catch (e) {
+        related = [];
+      }
+
+      related.forEach((r) => {
+        html += '<div class="group relative overflow-hidden rounded-lg bg-[#f1e8cd] border border-[#c3c8c1] p-8 min-h-[220px] flex flex-col justify-end cursor-pointer hover:shadow-md transition-shadow" onclick="window.location.href=\'./details.html?id=' + r.id + '\'">' +
+          '<div class="relative z-10 space-y-2">' +
+            '<p class="text-[10px] uppercase tracking-widest text-[#a33b39] font-bold">Recommended Volume</p>' +
+            '<h4 class="font-serif text-lg md:text-xl text-[#061b0e] font-bold">' + P.escapeHtml(r.title) + '</h4>' +
+            '<p class="text-xs text-[#434843] italic line-clamp-2 max-w-lg">' + P.escapeHtml(r.author) + ' · ' + P.escapeHtml(r.genre) + '</p>' +
+          '</div>' +
+        '</div>';
+      });
+
+      html += '<div class="group relative overflow-hidden rounded-lg bg-[#1b3022] p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:brightness-110 transition-all shadow-md" onclick="window.location.href=\'./index.html\'">' +
+        '<div class="wax-seal w-12 h-12 mb-4 border border-white/20 rounded-full flex items-center justify-center">' +
+          '<span class="material-symbols-outlined text-white text-xl">auto_stories</span>' +
+        '</div>' +
+        '<h4 class="font-serif text-lg text-[#ffe088] font-bold">The Complete Index</h4>' +
+        '<span class="mt-4 text-[#ffe088] text-xs uppercase tracking-widest font-bold border-b border-[#ffe088]">View All Catalog</span>' +
+      '</div>';
+
+      section.innerHTML = html + '</div>';
+      document.getElementById('bookMain').appendChild(section);
+    }
+
+    function requestReadingRoom() {
+      P.toast('Your request has been dispatched to the reading room. Pray, speak with the archivist on arrival.', 'info');
+    }
+
+    function shareLink() {
+      navigator.clipboard.writeText(window.location.href)
+        .then(() => P.toast('Catalog link copied! Send by raven or digital carrier.', 'success'))
+        .catch(() => P.toast('Could not copy the catalog link.', 'error'));
+    }
+
+    async function loadBook() {
+      const id = new URLSearchParams(window.location.search).get('id');
+      if (!id) {
+        document.getElementById('bookMain').innerHTML =
+          '<div class="text-center py-24">' +
+            '<p class="font-serif text-xl text-[#061b0e] italic">No tome was selected.</p>' +
+            '<a href="./index.html" class="mt-4 inline-block bg-[#1b3022] text-[#fff9ed] px-5 py-2 rounded text-xs uppercase tracking-widest font-bold">Return to Catalog</a>' +
+          '</div>';
+        return;
+      }
+      try {
+        const book = await P.request('/books/' + id);
+        renderBook(book);
+      } catch (e) {
+        document.getElementById('bookMain').innerHTML =
+          '<div class="text-center py-24">' +
+            '<p class="font-serif text-xl text-[#a33b39] italic">This tome could not be located in the archive.</p>' +
+            '<a href="./index.html" class="mt-4 inline-block bg-[#1b3022] text-[#fff9ed] px-5 py-2 rounded text-xs uppercase tracking-widest font-bold">Return to Catalog</a>' +
+          '</div>';
+      }
+    }
+
+    loadBook();
+  </script>
+</body>
+</html>

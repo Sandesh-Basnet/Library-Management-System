@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scribe New Entry | पुस्तकालय</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts & Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Literata:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="./style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Literata', 'serif'],
+            serif: ['EB Garamond', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#fff9ed] text-[#1f1c0b] font-sans min-h-screen flex flex-col relative">
+
+  <!-- Parchment texture overlay -->
+  <div class="fixed inset-0 pointer-events-none opacity-[0.03] parchment-texture mix-blend-multiply z-0"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="border-b border-[#c3c8c1] bg-[#fcf3d8]/90 backdrop-blur sticky top-0 z-50">
+    <div class="flex justify-between items-center px-6 md:px-10 py-4 max-w-[1200px] mx-auto w-full">
+      <div class="flex items-center gap-4 cursor-pointer" onclick="window.location.href='./index.html'">
+        <div class="w-10 h-10 rounded-full bg-[#061b0e] flex items-center justify-center text-white overflow-hidden border border-[#b4cdb8]">
+          <span class="material-symbols-outlined text-[#ffe088]">auto_stories</span>
+        </div>
+        <span class="font-serif text-xl italic font-bold text-[#061b0e]">पुस्तकालय</span>
+      </div>
+
+      <div class="hidden md:flex items-center gap-8 text-sm uppercase tracking-widest font-semibold">
+        <a href="./index.html" class="text-[#434843] hover:text-[#061b0e] transition-colors">Books</a>
+        <a href="./registers.html" class="text-[#a33b39] border-b-2 border-[#a33b39] pb-1">Registers</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span class="text-xs italic text-[#434843] font-semibold hidden sm:inline" id="archivistName">Archivist</span>
+        <button onclick="Pustakalaya.toggleMenu('mobileMenu')" class="md:hidden text-[#061b0e] p-1" aria-label="Toggle menu">
+          <span class="material-symbols-outlined text-2xl">menu</span>
+        </button>
+        <button onclick="Pustakalaya.logout()" class="bg-[#a33b39] text-[#fff9ed] px-4 py-2 rounded text-xs uppercase tracking-widest font-bold hover:bg-[#630a10] transition-colors">
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-[#c3c8c1] bg-[#fcf3d8] px-6 py-4">
+      <a href="./index.html" class="block py-2 text-sm uppercase tracking-widest font-semibold text-[#434843] hover:text-[#061b0e]">Books</a>
+      <a href="./registers.html" class="block py-2 text-sm uppercase tracking-widest font-semibold text-[#a33b39]">Registers</a>
+      <button onclick="Pustakalaya.logout()" class="block w-full mt-2 bg-[#a33b39] text-[#fff9ed] text-center px-4 py-2 rounded text-xs uppercase tracking-widest font-bold">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Return back button row -->
+  <div class="max-w-[1200px] mx-auto w-full px-6 md:px-10 pt-10">
+    <a href="./registers.html" class="inline-flex items-center gap-2 text-[#434843] hover:text-[#061b0e] transition-colors group text-xs uppercase tracking-widest font-bold">
+      <span class="material-symbols-outlined transition-transform group-hover:-translate-x-1">arrow_back</span>
+      Return to Registers
+    </a>
+  </div>
+
+  <!-- Main Scribe Form Content -->
+  <main class="max-w-[900px] mx-auto w-full px-6 md:px-10 py-10 flex-grow">
+
+    <div class="parchment-texture bg-[#fff9ed] border border-[#c3c8c1] rounded-lg p-6 md:p-10 shadow-2xl relative">
+      <!-- Decorative borders -->
+      <div class="absolute top-4 left-4 w-6 h-6 border-t border-l border-[#061b0e]/20 rounded-tl"></div>
+      <div class="absolute top-4 right-4 w-6 h-6 border-t border-r border-[#061b0e]/20 rounded-tr"></div>
+      <div class="absolute bottom-4 left-4 w-6 h-6 border-b border-l border-[#061b0e]/20 rounded-bl"></div>
+      <div class="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-[#061b0e]/20 rounded-br"></div>
+
+      <header class="text-center mb-10">
+        <span class="text-[#a33b39] text-xs uppercase tracking-[0.25em] block mb-2 font-semibold">Archival Ingestion Scroll</span>
+        <h1 id="formTitle" class="font-serif text-3xl text-[#061b0e] font-bold">Scribe into Ledger</h1>
+        <p id="formSubtitle" class="text-xs italic text-[#434843] mt-2">Carefully scribe the characteristics, catalog data, and history of newly discovered volumes.</p>
+        <div class="dotted-divider mt-6"></div>
+      </header>
+
+      <form id="intakeForm" class="space-y-8" novalidate onsubmit="handleIntakeSubmit(event)">
+
+        <!-- Two-column row: Title & Author -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-1">
+            <label for="title" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Tome Title</label>
+            <input
+              id="title"
+              type="text"
+              required
+              placeholder="e.g. The Clockwork Alchemist"
+              class="w-full input-ledger text-base text-[#1f1c0b]"
+            />
+          </div>
+
+          <div class="space-y-1">
+            <label for="author" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Author</label>
+            <select
+              id="author"
+              required
+              class="w-full input-ledger text-base text-[#1f1c0b] appearance-none cursor-pointer bg-transparent"
+            >
+              <option value="">Select an author…</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Two-column row: Genre & Published Year -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-1">
+            <label for="genre" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Genre Classification</label>
+            <select
+              id="genre"
+              required
+              class="w-full input-ledger text-base text-[#1f1c0b] appearance-none cursor-pointer bg-transparent"
+            >
+              <option value="">Select a genre…</option>
+            </select>
+          </div>
+
+          <div class="space-y-1">
+            <label for="publishedYear" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Published Year</label>
+            <input
+              id="publishedYear"
+              type="number"
+              min="1000"
+              max="2200"
+              placeholder="e.g. 1892"
+              class="w-full input-ledger text-base text-[#1f1c0b]"
+            />
+          </div>
+        </div>
+
+        <!-- Three-column row: Copies -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="space-y-1">
+            <label for="totalCopies" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Total Copies</label>
+            <input
+              id="totalCopies"
+              type="number"
+              min="1"
+              value="1"
+              required
+              class="w-full input-ledger text-base text-[#1f1c0b]"
+            />
+          </div>
+
+          <div class="space-y-1">
+            <label for="availableCopies" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Available Copies</label>
+            <input
+              id="availableCopies"
+              type="number"
+              min="0"
+              value="1"
+              required
+              class="w-full input-ledger text-base text-[#1f1c0b]"
+            />
+          </div>
+
+          <div class="space-y-1">
+            <label for="lowStockThreshold" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Low-Stock Threshold</label>
+            <input
+              id="lowStockThreshold"
+              type="number"
+              min="0"
+              value="3"
+              class="w-full input-ledger text-base text-[#1f1c0b]"
+            />
+            <p class="text-[10px] italic text-[#434843]/70 mt-1">Alerts when available copies reach this number.</p>
+          </div>
+        </div>
+
+        <!-- Three-column row: ISBN, Archive Ref, Condition -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="space-y-1">
+            <label for="isbn" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">ISBN / Scribe Registry Code</label>
+            <input
+              id="isbn"
+              type="text"
+              placeholder="e.g. 978-0123456789"
+              class="w-full input-ledger text-sm text-[#1f1c0b]"
+            />
+          </div>
+
+          <div class="space-y-1">
+            <label for="archiveRef" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Archive Reference</label>
+            <input
+              id="archiveRef"
+              type="text"
+              placeholder="e.g. CL-1892-BX"
+              class="w-full input-ledger text-sm text-[#1f1c0b]"
+            />
+          </div>
+
+          <div class="space-y-1">
+            <label for="condition" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Condition Level</label>
+            <select id="condition" class="w-full input-ledger text-sm text-[#1f1c0b] appearance-none cursor-pointer bg-transparent">
+              <option value="Excellent">Excellent</option>
+              <option value="Good">Good</option>
+              <option value="Fragile (Level 3)">Fragile (Level 3)</option>
+              <option value="Fragile (Level 4)">Fragile (Level 4)</option>
+              <option value="Fragile (Level 5)">Fragile (Level 5)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Two-column row: Cover URL & Restoration -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-1">
+            <label for="coverImageUrl" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Cover Image URL</label>
+            <input
+              id="coverImageUrl"
+              type="text"
+              placeholder="https://…/cover.jpg"
+              class="w-full input-ledger text-sm text-[#1f1c0b]"
+            />
+          </div>
+
+          <div class="space-y-1">
+            <label for="restoration" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">Restoration Log</label>
+            <input
+              id="restoration"
+              type="text"
+              placeholder="e.g. Lanolin Treatment (1956)"
+              class="w-full input-ledger text-sm text-[#1f1c0b]"
+            />
+          </div>
+        </div>
+
+        <!-- History/Description Textarea -->
+        <div class="space-y-1">
+          <label for="description" class="block text-xs uppercase tracking-wider font-bold text-[#735c00]">History of this Tome</label>
+          <textarea
+            id="description"
+            rows="5"
+            placeholder="Document the origins, recovery details, paper quality, unique bindings, and legends associated with this physical volume..."
+            class="w-full bg-[#fcf3d8]/50 border border-[#c3c8c1] rounded p-4 text-sm focus:outline-none focus:border-[#cba72f] text-[#1f1c0b] italic leading-relaxed"
+          ></textarea>
+        </div>
+
+        <!-- Form action buttons -->
+        <div class="dotted-divider my-8"></div>
+
+        <div class="flex flex-wrap gap-4 justify-end">
+          <button
+            type="button"
+            onclick="clearForm()"
+            class="px-6 py-3 border border-[#c3c8c1] rounded text-xs uppercase tracking-widest font-bold text-[#434843] hover:bg-[#ebe2c8]/40 transition-colors"
+          >
+            Clear Scroll
+          </button>
+
+          <button
+            type="submit"
+            id="submitBtn"
+            class="px-8 py-3 bg-[#1b3022] hover:bg-[#061b0e] text-[#fff9ed] rounded-lg text-xs uppercase tracking-widest font-bold shadow-md transition-transform duration-300 hover:scale-[0.98]"
+          >
+            Scribe into Ledger
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-[#ebe2c8] border-t border-[#737973]/30 py-8 px-6 mt-12">
+    <div class="max-w-[1200px] mx-auto text-center flex flex-col items-center gap-4">
+      <span class="font-serif text-base italic text-[#061b0e] font-semibold">© 1892 पुस्तकालय Magical Library</span>
+      <p class="text-[10px] text-[#434843]/60 italic">
+        Ensure spelling, catalog references, and fragile codes are transcribed accurately.
+      </p>
+    </div>
+  </footer>
+
+  <script src="./js/common.js"></script>
+  <script>
+    const P = window.Pustakalaya;
+    const form = document.getElementById('intakeForm');
+    const editingId = new URLSearchParams(window.location.search).get('id');
+
+    const CONDITION_OPTIONS = ['Excellent', 'Good', 'Fragile (Level 3)', 'Fragile (Level 4)', 'Fragile (Level 5)'];
+
+    function isValidIsbn(value) {
+      const clean = value.replace(/[-\s]/g, '');
+      return /^\d{13}$/.test(clean) || /^\d{9}[\dXx]$/.test(clean);
+    }
+
+    function isValidUrl(value) {
+      try {
+        const url = new URL(value);
+        return url.protocol === 'http:' || url.protocol === 'https:';
+      } catch (e) {
+        return false;
+      }
+    }
+
+    // ── Dropdowns ─────────────────────────────────────────────────────────
+    async function loadOptions(select, path, placeholder) {
+      const { data } = await P.request(path);
+      select.innerHTML = '<option value="">' + placeholder + '</option>' + data
+        .map((item) => '<option value="' + item.id + '">' + P.escapeHtml(item.name) + '</option>')
+        .join('');
+    }
+
+    // ── Edit mode ─────────────────────────────────────────────────────────
+    function setCondition(condition) {
+      const select = document.getElementById('condition');
+      if (!condition) return;
+      if (!CONDITION_OPTIONS.includes(condition)) {
+        const opt = document.createElement('option');
+        opt.value = condition;
+        opt.textContent = condition;
+        select.appendChild(opt);
+      }
+      select.value = condition;
+    }
+
+    async function loadBookForEdit(id) {
+      const book = await P.request('/books/' + id);
+      document.getElementById('formTitle').textContent = 'Amend Ledger Entry';
+      document.getElementById('formSubtitle').textContent = 'Correct the records of this volume in the archival ledger.';
+      document.getElementById('submitBtn').textContent = 'Amend Ledger';
+
+      document.getElementById('title').value = book.title || '';
+      document.getElementById('author').value = book.authorId || '';
+      document.getElementById('genre').value = book.genreId || '';
+      document.getElementById('publishedYear').value = book.publishedYear || '';
+      document.getElementById('totalCopies').value = book.totalCopies;
+      document.getElementById('availableCopies').value = book.availableCopies;
+      document.getElementById('lowStockThreshold').value = book.lowStockThreshold;
+      document.getElementById('isbn').value = book.isbn || '';
+      document.getElementById('archiveRef').value = book.archiveRef || '';
+      setCondition(book.conditionLevel);
+      document.getElementById('restoration').value = book.restorationLog || '';
+      document.getElementById('coverImageUrl').value = book.coverImageUrl || '';
+      document.getElementById('description').value = book.description || '';
+    }
+
+    // ── Client-side validation (UX sugar; server re-validates) ────────────
+    function validateForm() {
+      P.clearFormErrors(form);
+      const errors = [];
+
+      const title = document.getElementById('title').value.trim();
+      const authorId = document.getElementById('author').value;
+      const genreId = document.getElementById('genre').value;
+      const totalCopies = document.getElementById('totalCopies').value;
+      const availableCopies = document.getElementById('availableCopies').value;
+      const lowStockThreshold = document.getElementById('lowStockThreshold').value;
+      const isbn = document.getElementById('isbn').value.trim();
+      const publishedYear = document.getElementById('publishedYear').value;
+      const coverImageUrl = document.getElementById('coverImageUrl').value.trim();
+
+      if (!title) errors.push({ field: 'title', el: '#title', message: 'Tome title is required.' });
+      if (!authorId) errors.push({ field: 'authorId', el: '#author', message: 'Select an author from the registry.' });
+      if (!genreId) errors.push({ field: 'genreId', el: '#genre', message: 'Select a genre classification.' });
+
+      if (isbn && !isValidIsbn(isbn)) {
+        errors.push({ field: 'isbn', el: '#isbn', message: 'ISBN must be a valid ISBN-10 or ISBN-13 (e.g. 978-0123456789).' });
+      }
+
+      if (publishedYear !== '') {
+        const y = Number(publishedYear);
+        if (!Number.isInteger(y) || y < 1000 || y > new Date().getFullYear() + 1) {
+          errors.push({ field: 'publishedYear', el: '#publishedYear', message: 'Published year must be between 1000 and ' + (new Date().getFullYear() + 1) + '.' });
+        }
+      }
+
+      const total = Number(totalCopies);
+      const available = Number(availableCopies);
+      const threshold = Number(lowStockThreshold);
+
+      if (!Number.isInteger(total) || total < 1) {
+        errors.push({ field: 'totalCopies', el: '#totalCopies', message: 'Total copies must be a positive integer.' });
+      }
+      if (!Number.isInteger(available) || available < 0) {
+        errors.push({ field: 'availableCopies', el: '#availableCopies', message: 'Available copies must be a non-negative integer.' });
+      }
+      if (Number.isInteger(total) && Number.isInteger(available) && available > total) {
+        errors.push({ field: 'availableCopies', el: '#availableCopies', message: 'Available copies cannot exceed total copies.' });
+      }
+      if (!Number.isInteger(threshold) || threshold < 0) {
+        errors.push({ field: 'lowStockThreshold', el: '#lowStockThreshold', message: 'Low-stock threshold must be a non-negative integer.' });
+      }
+
+      if (coverImageUrl && !isValidUrl(coverImageUrl)) {
+        errors.push({ field: 'coverImageUrl', el: '#coverImageUrl', message: 'Cover image must be a valid http(s) URL.' });
+      }
+
+      errors.forEach((err) => P.setFieldError(form.querySelector(err.el), err.message));
+      return errors.length === 0;
+    }
+
+    function buildPayload() {
+      return {
+        title: document.getElementById('title').value.trim(),
+        authorId: Number(document.getElementById('author').value),
+        genreId: Number(document.getElementById('genre').value),
+        isbn: document.getElementById('isbn').value.trim() || null,
+        archiveRef: document.getElementById('archiveRef').value.trim() || null,
+        description: document.getElementById('description').value.trim() || null,
+        coverImageUrl: document.getElementById('coverImageUrl').value.trim() || null,
+        publishedYear: document.getElementById('publishedYear').value ? Number(document.getElementById('publishedYear').value) : null,
+        totalCopies: Number(document.getElementById('totalCopies').value),
+        availableCopies: Number(document.getElementById('availableCopies').value),
+        lowStockThreshold: Number(document.getElementById('lowStockThreshold').value),
+        conditionLevel: document.getElementById('condition').value || null,
+        restorationLog: document.getElementById('restoration').value.trim() || null,
+      };
+    }
+
+    // ── Submit ────────────────────────────────────────────────────────────
+    async function handleIntakeSubmit(e) {
+      e.preventDefault();
+      if (!validateForm()) return;
+
+      const submit = document.getElementById('submitBtn');
+      submit.disabled = true;
+      submit.textContent = 'Sealing…';
+
+      const payload = buildPayload();
+      const options = {
+        method: editingId ? 'PUT' : 'POST',
+        body: JSON.stringify(payload),
+      };
+
+      try {
+        if (editingId) {
+          await P.request('/books/' + editingId, options);
+          P.toast('Tome amended in the archives!', 'success');
+        } else {
+          await P.request('/books', options);
+          P.toast('Tome successfully scribed into the library archives!', 'success');
+        }
+        window.location.href = './registers.html';
+      } catch (err) {
+        submit.disabled = false;
+        submit.textContent = editingId ? 'Amend Ledger' : 'Scribe into Ledger';
+        if (err.status === 400 && err.body && err.body.errors) {
+          P.applyFieldErrors(form, err.body.errors, {
+            title: '#title',
+            authorId: '#author',
+            genreId: '#genre',
+            isbn: '#isbn',
+            archiveRef: '#archiveRef',
+            description: '#description',
+            coverImageUrl: '#coverImageUrl',
+            publishedYear: '#publishedYear',
+            totalCopies: '#totalCopies',
+            availableCopies: '#availableCopies',
+            lowStockThreshold: '#lowStockThreshold',
+            conditionLevel: '#condition',
+            restorationLog: '#restoration',
+          });
+        } else if (err.status === 401) {
+          window.location.href = './login.html';
+        } else {
+          P.toast('The ledger could not be reached. Try again.', 'error');
+        }
+      }
+    }
+
+    function clearForm() {
+      P.clearFormErrors(form);
+      form.reset();
+      document.getElementById('author').value = '';
+      document.getElementById('genre').value = '';
+      document.getElementById('totalCopies').value = '1';
+      document.getElementById('availableCopies').value = '1';
+      document.getElementById('lowStockThreshold').value = '3';
+    }
+
+    // ── Init ──────────────────────────────────────────────────────────────
+    async function init() {
+      const user = await P.requireAuth();
+      if (!user) return;
+      document.getElementById('archivistName').textContent = user.name;
+
+      try {
+        await Promise.all([
+          loadOptions(document.getElementById('author'), '/authors/options', 'Select an author…'),
+          loadOptions(document.getElementById('genre'), '/genres/options', 'Select a genre…'),
+        ]);
+        if (editingId) {
+          await loadBookForEdit(editingId);
+        }
+      } catch (err) {
+        if (err.status === 401) {
+          window.location.href = './login.html';
+          return;
+        }
+        P.toast('The registries could not be loaded.', 'error');
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
